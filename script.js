@@ -32,6 +32,18 @@
   startTimer();
 })();
 
+// ===== HERO CATALOG ROTATOR =====
+(function () {
+  const slides = document.querySelectorAll('.mockup-slide');
+  if (!slides.length) return;
+  let current = 0;
+  setInterval(function () {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 3000);
+})();
+
 // ===== TEAMS SLIDER — duplikuj dla pętli =====
 (function () {
   const slider = document.getElementById('teamsSlider');

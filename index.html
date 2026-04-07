@@ -15,15 +15,15 @@
   <!-- ===================== HERO ===================== -->
   <header class="hero">
     <nav class="nav">
-      <a href="https://mta.digital" class="nav-logo" target="_blank" rel="noopener">
-        <span class="nav-logo-dot">·</span>mta
+      <a href="#" class="nav-logo">
+        <img src="assets/logo-cennikb2b.png" alt="CennikB2B" class="nav-logo-img" />
       </a>
       <a href="#kontakt" class="btn btn-outline-sm">Kontakt</a>
     </nav>
 
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-tag">Automatyzacja B2B</div>
+        <div class="hero-tag">Dedykowany cennik. Na żądanie.</div>
 
         <div class="hero-headlines" id="heroSlider">
           <h1 class="hero-headline active">Twoje ceny surowców mogą zmienić się w tydzień.<br><span class="accent">Twój cennik powinien też.</span></h1>
@@ -37,7 +37,7 @@
           <button class="dot" aria-label="Slajd 3"></button>
         </div>
 
-        <p class="hero-sub">System automatycznego generowania katalogów B2B dla firm produkcyjnych.</p>
+        <p class="hero-sub">Twój handlowiec generuje spersonalizowany cennik w 15 minut — bez grafika, bez Excela.</p>
 
         <div class="hero-cta">
           <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-primary" target="_blank" rel="noopener">
@@ -48,18 +48,18 @@
             +48 730 971 962
           </a>
         </div>
+        <p class="hero-micro">Bezpłatne 30-min demo. Bez zobowiązań.</p>
       </div>
 
       <div class="hero-mockup" aria-hidden="true">
-        <div class="mockup-page mockup-page-3"></div>
-        <div class="mockup-page mockup-page-2"></div>
-        <div class="mockup-page mockup-page-1">
-          <div class="mockup-header"></div>
-          <div class="mockup-row"></div>
-          <div class="mockup-row mockup-row-short"></div>
-          <div class="mockup-row"></div>
-          <div class="mockup-row mockup-row-short"></div>
-        </div>
+        <div class="mockup-shadow mockup-shadow-2"></div>
+        <div class="mockup-shadow mockup-shadow-1"></div>
+        <div class="mockup-slide active" style="background-image:url('assets/catalog-page-1.png')"></div>
+        <div class="mockup-slide" style="background-image:url('assets/catalog-page-2.png')"></div>
+        <div class="mockup-slide" style="background-image:url('assets/catalog-page-3.png')"></div>
+        <div class="mockup-slide" style="background-image:url('assets/catalog-page-4.png')"></div>
+        <div class="mockup-slide" style="background-image:url('assets/catalog-page-5.png')"></div>
+        <div class="mockup-slide" style="background-image:url('assets/catalog-page-6.png')"></div>
       </div>
     </div>
 
@@ -95,6 +95,46 @@
       </div>
     </div>
     <div class="section-divider">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--beige)"/></svg>
+    </div>
+  </section>
+
+  <!-- ===================== DLA KOGO ===================== -->
+  <section class="section section-beige" id="dla-kogo">
+    <div class="container">
+      <h2 class="section-title">Czy CennikB2B jest dla Ciebie?</h2>
+
+      <div class="fit-grid">
+        <div class="fit-card fit-card-yes">
+          <div class="fit-card-header">
+            <div class="fit-icon fit-icon-yes">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3>To jest dla Ciebie, jeżeli…</h3>
+          </div>
+          <ul class="fit-list">
+            <li>Prowadzisz firmę produkcyjną lub dystrybucyjną z katalogiem 100–1000 produktów</li>
+            <li>Obsługujesz kilku lub więcej hurtowników albo klientów z różnymi rabatami i warunkami</li>
+            <li>Twój handlowiec traci czas na ręczne przygotowywanie ofert zamiast sprzedawać</li>
+            <li>Ceny surowców lub koszty produkcji zmieniają się i cennik szybko się dezaktualizuje</li>
+            <li>Chcesz wysyłać klientom spersonalizowane katalogi z ich logo i dedykowanymi cenami</li>
+          </ul>
+        </div>
+        <div class="fit-card fit-card-no">
+          <div class="fit-card-header">
+            <div class="fit-icon fit-icon-no">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+            <h3>To NIE jest dla Ciebie, jeżeli…</h3>
+          </div>
+          <ul class="fit-list">
+            <li>Masz już wdrożony system ERP lub PIM z modułem automatycznego ofertowania</li>
+            <li>Twoja oferta to mniej niż 20 produktów — tu wystarczy ręcznie</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section-divider">
       <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--dark)"/></svg>
     </div>
   </section>
@@ -109,8 +149,8 @@
         <div class="step">
           <div class="step-number">01</div>
           <div class="step-content">
-            <h3>Twoje dane w Sheets</h3>
-            <p>Przenosimy raz to, co masz w Excelu. Produkty, kody, wymiary, ceny — w jednym arkuszu.</p>
+            <h3>Twoje produkty w jednym arkuszu</h3>
+            <p>Przenosimy raz to, co masz — produkty, kody, wymiary, ceny — do arkusza Excel lub Google Sheets.</p>
           </div>
           <div class="step-screen" aria-hidden="true">
             <div class="screen-dots"><span></span><span></span><span></span></div>
@@ -123,7 +163,7 @@
           <div class="step-number">02</div>
           <div class="step-content">
             <h3>Handlowiec wypełnia formularz</h3>
-            <p>Nazwa klienta, logo hurtownika, język cennika, opcjonalnie — własny CSV z cenami dedykowanymi.</p>
+            <p>Nazwa klienta, logo hurtownika, język cennika, opcjonalnie — własną tabelkę z cenami dedykowanymi.</p>
           </div>
           <div class="step-screen" aria-hidden="true">
             <div class="screen-dots"><span></span><span></span><span></span></div>
@@ -136,7 +176,7 @@
           <div class="step-number">03</div>
           <div class="step-content">
             <h3>15 minut → PDF na emailu</h3>
-            <p>Gotowy, spersonalizowany cennik z logo hurtownika i jego cenami. Link do edytowalnego Slides w bonusie.</p>
+            <p>Gotowy, spersonalizowany cennik z logo hurtownika i jego cenami. Link do edytowalnej prezentacji w bonusie.</p>
           </div>
           <div class="step-screen" aria-hidden="true">
             <div class="screen-dots"><span></span><span></span><span></span></div>
@@ -163,12 +203,91 @@
         </div>
         <div class="metric">
           <div class="metric-value">1 zmiana</div>
-          <div class="metric-label">w Sheets aktualizuje wszystkie cenniki jednocześnie</div>
+          <div class="metric-label">w arkuszu aktualizuje wszystkie cenniki jednocześnie</div>
         </div>
         <div class="metric">
           <div class="metric-value">0 błędów</div>
           <div class="metric-label">wynikających z ręcznego przepisywania danych</div>
         </div>
+      </div>
+    </div>
+    <div class="section-divider">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--white)"/></svg>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section class="section section-light" id="cennik">
+    <div class="container">
+      <h2 class="section-title">Czy to się opłaca?</h2>
+      <p class="section-sub">Porównaj koszt ręcznego tworzenia cennika z naszym systemem.</p>
+
+      <div class="pricing-table-wrap">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Tradycyjny grafik</th>
+              <th class="pricing-col-highlight">CennikB2B</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Czas przygotowania (250 stron)</td>
+              <td>40–60 dni</td>
+              <td class="pricing-col-highlight"><strong>10 dni roboczych</strong></td>
+            </tr>
+            <tr>
+              <td>Koszt pracy grafika</td>
+              <td>~150–240 godz. × 140 zł/h<br><span style="font-size:12px;color:var(--muted)">≈ 25 000 PLN za pierwszy skład</span></td>
+              <td class="pricing-col-highlight"><strong>od 7 900 PLN</strong></td>
+            </tr>
+            <tr>
+              <td>Koszt każdej aktualizacji cen</td>
+              <td>~5 000 PLN + 2 tyg. czekania<br><span style="font-size:12px;color:var(--muted)">nowy brief, nowe rundy poprawek</span></td>
+              <td class="pricing-col-highlight"><strong>0 PLN — generujesz sam w 15 min</strong></td>
+            </tr>
+            <tr>
+              <td>Rundy poprawek z grafikiem</td>
+              <td>2–3 rundy, tydzień oczekiwania każda<br><span style="font-size:12px;color:var(--muted)">Twój dyrektor handlowy pilnuje całego procesu</span></td>
+              <td class="pricing-col-highlight"><strong>Brak — dane się zaciągają automatycznie</strong></td>
+            </tr>
+            <tr>
+              <td>Ryzyko błędu w danych</td>
+              <td>Wysokie — ręczne przepisywanie<br><span style="font-size:12px;color:var(--muted)">błąd w wymiarze = zwrot towaru od hurtownika</span></td>
+              <td class="pricing-col-highlight"><strong>Zerowe — dane z jednego źródła</strong></td>
+            </tr>
+            <tr>
+              <td>Personalizacja pod klienta</td>
+              <td>Brak (za drogo i za długo)</td>
+              <td class="pricing-col-highlight"><strong>W cenie — każdy hurtownik dostaje swój cennik</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pricing-variants">
+        <div class="pricing-variant">
+          <div class="pricing-variant-name">Basic</div>
+          <div class="pricing-variant-price">7 900 PLN</div>
+          <div class="pricing-variant-desc">Gotowy szablon cennika + Twoje dane</div>
+        </div>
+        <div class="pricing-variant pricing-variant-featured">
+          <div class="pricing-variant-badge">Najpopularniejszy</div>
+          <div class="pricing-variant-name">Standard</div>
+          <div class="pricing-variant-price">9 900 PLN</div>
+          <div class="pricing-variant-desc">Layout Twojego grafika + dostosowanie danych</div>
+        </div>
+        <div class="pricing-variant">
+          <div class="pricing-variant-name">Enterprise</div>
+          <div class="pricing-variant-price">14 900 PLN</div>
+          <div class="pricing-variant-desc">Nasz grafik projektuje layout od podstaw</div>
+        </div>
+      </div>
+
+      <div class="pricing-guarantee">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <p><strong>Risk-free:</strong> Płacisz dopiero za wspólnie zaakceptowany, gotowy system. Jeśli nie spełnimy założeń — zwracamy zaliczkę. Model 50/50: połowa na start, połowa po odbiorze.</p>
       </div>
     </div>
     <div class="section-divider">
@@ -180,17 +299,13 @@
   <section class="section section-dark" id="katalog">
     <div class="container">
       <h2 class="section-title">Zobacz przykładowy katalog</h2>
-      <p class="section-sub">Katalog demonstracyjny Mebella.pl — ceny przykładowe.</p>
+      <p class="section-sub">Katalog demonstracyjny mebella.pl — ceny przykładowe.</p>
 
       <div class="catalog-preview">
-        <div class="catalog-embed">
-          <iframe class="catalog-iframe" data-src="" title="Przykładowy katalog B2B" style="display:none"></iframe>
-          <div class="catalog-placeholder">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            <p>Podgląd katalogu pojawi się wkrótce</p>
-          </div>
+        <div class="catalog-embed catalog-embed-flipbook">
+          <iframe allowfullscreen="allowfullscreen" allow="clipboard-write" scrolling="no" class="fp-iframe" src="https://heyzine.com/flip-book/c6bd96871d.html" style="border: 0px; width: 100%; height: 506px;"></iframe>
         </div>
-        <a href="#" class="btn btn-primary catalog-btn" target="_blank" rel="noopener">
+        <a href="https://heyzine.com/flip-book/c6bd96871d.html" class="btn btn-primary catalog-btn" target="_blank" rel="noopener">
           Otwórz katalog w nowej karcie →
         </a>
       </div>
@@ -218,14 +333,14 @@
           </div>
           <div class="testimonial-author">
             <div class="testimonial-photo-wrap">
-              <img src="assets/photo-mateusz-kotowski.jpg" alt="Mateusz Kotowski" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <img src="assets/photo-mateusz-kotowski.png" alt="Mateusz Kotowski" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="testimonial-avatar-fallback">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
             </div>
             <div>
               <strong>Mateusz Kotowski</strong>
-              <span>Prezes, Mebella.pl</span>
+              <span>Prezes, mebella.pl</span>
             </div>
           </div>
         </div>
@@ -237,14 +352,14 @@
           </blockquote>
           <div class="testimonial-author">
             <div class="testimonial-photo-wrap">
-              <img src="assets/photo-ewa-dulcet.jpg" alt="Ewa Dulcet" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <img src="assets/photo-ewa-dulcet.png" alt="Ewa Dulcet" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="testimonial-avatar-fallback">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
             </div>
             <div>
               <strong>Ewa Dulcet</strong>
-              <span>Graphic Designer</span>
+              <span>Designer, mebella.pl</span>
             </div>
           </div>
         </div>
@@ -257,42 +372,101 @@
   <section class="section section-dark" id="mta-group">
     <div class="container">
       <div class="mta-header">
-        <div class="mta-logo-large">·mta <span class="mta-group-label">group</span></div>
+        <img src="assets/logo-mta-group.svg" alt="MTA Group" class="mta-logo-img" />
         <p class="mta-desc">CennikB2B to usługa stworzona przez <strong>MTA Group</strong> — grupę 7 wyspecjalizowanych zespołów digital, które łącznie obsługują firmy od performance marketingu po automatyzację procesów i development.</p>
       </div>
 
       <div class="teams-slider-wrapper">
         <div class="teams-slider" id="teamsSlider">
           <a href="https://forceofnatu.re" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">FON</div>
-            <div class="team-name">Force Of Nature</div>
+            <img src="https://www.forceofnatu.re/wp-content/uploads/2022/01/forceofnature-logo.svg" alt="Force Of Nature" class="team-logo" />
           </a>
           <a href="https://anchor.team" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">ANC</div>
-            <div class="team-name">Anchor Team</div>
+            <img src="https://cdn.prod.website-files.com/679bc4ec08fa2e08871608f3/679bd4b53865fe2ab98a3b3b_anc%20logo%20white.svg" alt="Anchor Team" class="team-logo" />
           </a>
           <a href="https://metrics.agency" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">MTR</div>
-            <div class="team-name">Metrics Agency</div>
+            <img src="https://metrics.agency/wp-content/uploads/2025/10/logo-metrics-agency.svg" alt="Metrics Agency" class="team-logo" />
           </a>
           <a href="https://mta.digital" class="team-card team-card-active" target="_blank" rel="noopener">
-            <div class="team-abbr">MTA</div>
-            <div class="team-name">MTA Digital</div>
+            <img src="assets/logo-mta.svg" alt="MTA Digital" class="team-logo" />
           </a>
           <a href="https://zerofluff.digital" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">ZFD</div>
-            <div class="team-name">Zero Fluff Digital</div>
+            <span class="team-logo-text">ZERO FLUFF</span>
           </a>
           <a href="https://sharkpress.agency" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">SP</div>
-            <div class="team-name">Shark Press</div>
+            <img src="https://cdn.prod.website-files.com/635ff9d36f1d021ac5b90458/63c464f174f93416d9c2e86c_SP8.svg" alt="Shark Press" class="team-logo" />
           </a>
           <a href="https://mtacu.pl" class="team-card" target="_blank" rel="noopener">
-            <div class="team-abbr">CU</div>
-            <div class="team-name">Code Union</div>
+            <img src="https://mtacu.pl/content/uploads/2025/04/cu.svg" alt="Code Union" class="team-logo" />
           </a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section section-dark" id="faq">
+    <div class="container">
+      <h2 class="section-title">Często zadawane pytania</h2>
+
+      <div class="faq-list">
+
+        <details class="faq-item">
+          <summary class="faq-question">Czy to działa tylko dla branży meblarskiej?</summary>
+          <div class="faq-answer">
+            <p>Nie — system działa dla każdej firmy produkcyjnej lub dystrybucyjnej, która ma katalog produktów i obsługuje odbiorców B2B. Mebella.pl to nasz pierwszy wdrożony klient, ale rozwiązanie jest branżowo-agnostyczne: meble, okna, drzwi, AGD, materiały budowlane, chemia gospodarcza — wszędzie tam, gdzie produkt ma parametry, kody i ceny.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Jak długo trwa wdrożenie?</summary>
+          <div class="faq-answer">
+            <p>Standardowa ścieżka składa się z 5 etapów:</p>
+            <ol>
+              <li><strong>Rozmowa wstępna</strong> — 1–2h, określamy zakres i czy nasze rozwiązanie pasuje do Twojej firmy</li>
+              <li><strong>Darmowa weryfikacja danych</strong> — 7 dni, sprawdzamy Twoje dane testowe i generujemy przykładowy cennik</li>
+              <li><strong>Przygotowanie danych przez Twój zespół</strong> — czas zależy od porządku w Twoim ERP (0–60 dni)</li>
+              <li><strong>Layout graficzny</strong> — 7–30 dni, zależnie od wybranego wariantu</li>
+              <li><strong>Budowa systemu</strong> — 14 dni roboczych</li>
+            </ol>
+            <p>Najdłuższy etap jest zawsze po Twojej stronie — czystość danych to klucz.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Czy muszę rezygnować z Excela lub ERP?</summary>
+          <div class="faq-answer">
+            <p>Nie. Jednorazowo przenosimy Twoje dane z Excela lub ERP do Google Sheets — to zajmuje ok. 1–2h wspólnej pracy. Potem Sheets to Twoja baza: edytujesz ją jak każdy arkusz, a system generuje cenniki na podstawie tego, co tam wpiszesz. Potrzebujesz tylko konta Google (podstawowy Google Workspace to ok. 6 USD/mc).</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Co jeśli coś przestanie działać po wdrożeniu?</summary>
+          <div class="faq-answer">
+            <p>Przez 6 miesięcy od przekazania systemu masz wsparcie techniczne. Każde zgłoszenie = podjęcie akcji w max 48h. Skrypty i automatyzacje potrafią się psuć — wiemy o tym i dlatego to wliczamy w cenę, a nie traktujemy jako dodatkową usługę.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Kiedy i za co dokładnie płacę?</summary>
+          <div class="faq-answer">
+            <p>Model 50/50: 50% przy podpisaniu zlecenia, 50% po wspólnej akceptacji gotowego systemu. Jeśli nie wygenerujemy cennika spełniającego wspólnie zdefiniowane założenia — zwracamy zaliczkę w całości. Każda ze stron może też wycofać się w dowolnym momencie bez konsekwencji.</p>
+            <p>Po 6 miesiącach wsparcia technicznego możesz przedłużyć opiekę — skontaktuj się z nami przed wygaśnięciem okresu.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Co po cenniku? Czy system można rozbudować?</summary>
+          <div class="faq-answer">
+            <p>Tak. Gdy dane masz już w jednym arkuszu i system działa, naturalnym kolejnym krokiem są <strong>karty produktów</strong> — większe zdjęcie, pełen opis techniczny, certyfikaty, materiały. Klienci najpierw dostają cennik, a potem pytają o szczegóły konkretnych produktów — karty to odpowiedź na to zapytanie.</p>
+            <p>Możliwe rozszerzenia: wersja angielska cennika (dla eksporterów), integracja z Twoim ERP (dane płyną automatycznie bez ręcznego arkusza), nowy layout po rebrandingu. Wszystko w oparciu o te same dane które już masz.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+    <div class="section-divider">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--beige)"/></svg>
     </div>
   </section>
 
@@ -308,12 +482,17 @@
         <div class="cta-card">
           <div class="cta-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
           <h3>Napisz do nas</h3>
-          <form class="contact-form" action="mailto:mateusz.mikolajczyk@mta.digital" method="get" enctype="text/plain">
-            <input type="text" name="Imię" placeholder="Imię i nazwisko" required />
-            <input type="text" name="Firma" placeholder="Nazwa firmy" required />
-            <input type="email" name="Email" placeholder="Adres email" required />
-            <textarea name="Wiadomość" placeholder="Wiadomość (opcjonalnie)" rows="3"></textarea>
-            <button type="submit" class="btn btn-primary btn-full">Wyślij →</button>
+          <div data-fs-success class="form-success">Dziękujemy! Odezwiemy się w ciągu 24 godzin.</div>
+          <div data-fs-error class="form-error"></div>
+          <form class="contact-form" id="contact-form">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <input type="text" name="imie" placeholder="Imię i nazwisko" required data-fs-field />
+            <input type="text" name="firma" placeholder="Nazwa firmy" required data-fs-field />
+            <input type="email" name="email" placeholder="Adres email" required data-fs-field />
+            <span data-fs-error="email" class="field-error"></span>
+            <input type="tel" name="telefon" placeholder="Numer telefonu (opcjonalnie)" data-fs-field />
+            <textarea name="wiadomosc" placeholder="Wiadomość (opcjonalnie)" rows="3" data-fs-field></textarea>
+            <button type="submit" class="btn btn-primary btn-full" data-fs-submit-btn>Wyślij →</button>
           </form>
         </div>
 
@@ -350,12 +529,19 @@
   <!-- ===================== FOOTER ===================== -->
   <footer class="footer">
     <div class="container footer-inner">
-      <a href="https://mta.digital" class="footer-logo" target="_blank" rel="noopener">·mta <span>group</span></a>
+      <a href="#" class="footer-logo">
+        <img src="assets/logo-cennikb2b.png" alt="CennikB2B" class="footer-logo-img" />
+      </a>
       <p class="footer-copy">© 2026 MTA Group. Wszelkie prawa zastrzeżone.</p>
       <a href="https://mta.digital" class="footer-link" target="_blank" rel="noopener">mta.digital →</a>
     </div>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#contact-form', formId: 'mlgopwzz' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
