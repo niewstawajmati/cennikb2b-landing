@@ -18,7 +18,7 @@
   }
 
   function startTimer() {
-    timer = setInterval(next, 4000);
+    timer = setInterval(next, 6000);
   }
 
   dots.forEach((dot, i) => {
