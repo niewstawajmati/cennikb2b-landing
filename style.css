@@ -475,6 +475,120 @@ body {
 
 .metric-label { font-size: 14px; color: var(--muted); line-height: 1.5; }
 
+/* ===== COMPARE ===== */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(15,32,64,0.10);
+}
+
+.compare-col {
+  padding: 48px 40px;
+}
+
+.compare-col-before {
+  background: var(--white);
+}
+
+.compare-col-after {
+  background: var(--dark);
+  color: var(--white);
+}
+
+.compare-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.compare-label-before {
+  background: var(--beige);
+  color: var(--muted);
+}
+
+.compare-label-after {
+  background: var(--yellow);
+  color: var(--dark);
+}
+
+.compare-heading {
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 28px;
+}
+
+.compare-col-before .compare-heading { color: var(--text); }
+.compare-col-after  .compare-heading { color: var(--white); }
+
+.compare-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.compare-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.compare-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.compare-item-text strong {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.compare-item-sub {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.compare-col-before .compare-item-text strong { color: var(--text); }
+.compare-col-before .compare-item-sub          { color: var(--muted); }
+.compare-col-after  .compare-item-text strong  { color: var(--white); }
+.compare-col-after  .compare-item-sub          { color: rgba(255,255,255,0.6); }
+
+.compare-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.compare-icon-bad {
+  background: rgba(254,105,65,0.12);
+  color: var(--red);
+}
+
+.compare-icon-good {
+  background: rgba(137,225,177,0.18);
+  color: #4ecf8a;
+}
+
+@media (max-width: 768px) {
+  .compare-grid { grid-template-columns: 1fr; }
+  .compare-col  { padding: 36px 28px; }
+}
+
 /* ===== FEATURES ===== */
 .features-grid {
   display: grid;
