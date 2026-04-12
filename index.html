@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -135,9 +136,9 @@
             <h3>To NIE jest dla Ciebie, jeżeli…</h3>
           </div>
           <ul class="fit-list">
-            <li>Jesteś zadowolony z tego, że Twoi handlowcy odpowiadają na zapytania cenowe przez kilka dni — i tak działa od lat</li>
-            <li>Wolisz, żeby każdy cennik powstawał od zera, za każdym razem, przy każdym kliencie</li>
-            <li>Nie przeszkadza Ci, że konkurencja wysyła ofertę szybciej</li>
+            <li>Masz mniej niż 20 SKU w ofercie</li>
+            <li>Sprzedajesz tylko detalicznie (B2C)</li>
+            <li>Masz już wdrożony system automatycznego generowania cenników wizualnych</li>
           </ul>
         </div>
       </div>
@@ -220,7 +221,7 @@
             <div class="step-number">03</div>
             <div class="step-content">
               <h3>Handlowiec wypełnia formularz <span class="step-time">~60 sekund</span></h3>
-              <p>Podaje dane klienta: które produkty, jakie rabaty, logo, data ważności. Klika "Wyślij".</p>
+              <p>Podaje dane klienta: które produkty, jakie rabaty, logo i datę ważności oferty. Klient od razu wie, do kiedy ma podjąć decyzję — a im szybciej oferta trafia do jego skrzynki, tym mniejsze ryzyko, że zdążył zapomnieć o rozmowie albo zapytać konkurencję. Klika "Wyślij".</p>
             </div>
             <div class="step-screen" aria-hidden="true">
               <div class="screen-dots"><span></span><span></span><span></span></div>
@@ -355,7 +356,7 @@
 
       <div class="pricing-hidden-cost">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        <p><strong>Czas handlowca to największy koszt, którego nie ma na żadnej fakturze.</strong> Zamiast sprzedawać — zbiera dane, ustala warunki, odpowiada na pytania, poprawia oferty. Jedna pełna oferta tradycyjnie to 2–4 godziny pracy i kilka dni czekania. Z CennikB2B: 60 sekund. Resztę robi system.</p>
+        <p><strong>Czas i frustracja handlowca to największy koszt, którego nie ma na żadnej fakturze.</strong> Zamiast sprzedawać — zbiera dane, ustala warunki, odpowiada na pytania, poprawia oferty. Jedna pełna oferta tradycyjnie to 2–4 godziny pracy i kilka dni czekania. Z CennikB2B: 60 sekund. Resztę robi system.</p>
       </div>
 
       <div class="pricing-table-wrap">
@@ -363,8 +364,8 @@
           <thead>
             <tr>
               <th></th>
-              <th>Bez CennikB2B</th>
-              <th class="pricing-col-highlight">Z CennikB2B</th>
+              <th class="pricing-col-negative"><span class="th-badge th-badge-no">✕</span> Bez CennikB2B</th>
+              <th class="pricing-col-highlight"><span class="th-badge th-badge-yes">✓</span> Z CennikB2B</th>
             </tr>
           </thead>
           <tbody>
@@ -378,8 +379,8 @@
             </tr>
             <tr>
               <td>Koszt jednej oferty (czas handlowca)</td>
-              <td>~300–600 PLN<br><span style="font-size:12px;color:var(--muted)">2–4h × ~150 PLN/h</span></td>
-              <td class="pricing-col-highlight"><strong>~2,50 PLN</strong><br><span style="font-size:12px">60 sek. × ~150 PLN/h</span></td>
+              <td>~400–800 PLN<br><span style="font-size:12px;color:var(--muted)">2–4h × ~200 PLN/h</span></td>
+              <td class="pricing-col-highlight"><strong>~3,30 PLN</strong><br><span style="font-size:12px">60 sek. × ~200 PLN/h</span></td>
             </tr>
             <tr>
               <td>Kiedy klient dostaje ofertę</td>
@@ -427,7 +428,7 @@
         <div class="pricing-variant pricing-variant-featured">
           <div class="pricing-variant-name">CennikB2B</div>
           <div class="pricing-variant-price">9 900 PLN</div>
-          <div class="pricing-variant-desc">Twój grafik dostarcza layout — my budujemy system</div>
+          <div class="pricing-variant-desc">Masz już grafika lub własny layout — potrzebujesz silnika</div>
           <ul class="pricing-variant-features">
             <li>✓ Analiza danych produktowych i definicja struktury</li>
             <li>✓ Budowa systemu automatyzacji (zaciąganie danych, generowanie PDF)</li>
@@ -435,18 +436,26 @@
             <li>✓ Formularz handlowca do generowania cenników</li>
             <li>✓ 6 miesięcy support techniczny (max 48h reakcja)</li>
             <li>✓ Model płatności 50/50 z gwarancją zwrotu zaliczki</li>
+            <li class="feature-unavailable">✕ Projekt graficzny layoutu cennika</li>
+            <li class="feature-unavailable">✕ 2–3 rundy poprawek layoutu</li>
           </ul>
+          <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-primary" target="_blank" rel="noopener" style="margin-top:16px;display:inline-block">Sprawdź czy to dla Ciebie →</a>
         </div>
         <div class="pricing-variant">
           <div class="pricing-variant-name">CennikB2B z Grafikiem</div>
           <div class="pricing-variant-price">14 900 PLN</div>
           <div class="pricing-variant-desc">Nasz designer projektuje layout od podstaw</div>
           <ul class="pricing-variant-features">
-            <li>✓ Wszystko z pakietu CennikB2B</li>
-            <li>✓ Projekt graficzny layoutu cennika B2B przez naszego designera</li>
+            <li>✓ Analiza danych produktowych i definicja struktury</li>
+            <li>✓ Budowa systemu automatyzacji (zaciąganie danych, generowanie PDF)</li>
+            <li>✓ Integracja z layoutem</li>
+            <li>✓ Formularz handlowca do generowania cenników</li>
+            <li>✓ 6 miesięcy support techniczny (max 48h reakcja)</li>
+            <li>✓ Model płatności 50/50 z gwarancją zwrotu zaliczki</li>
+            <li>✓ Projekt graficzny layoutu cennika przez naszego designera</li>
             <li>✓ 2–3 rundy poprawek layoutu</li>
-            <li>✓ Gotowy system "klucz w rękę"</li>
           </ul>
+          <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-outline-dark" target="_blank" rel="noopener" style="margin-top:16px;display:inline-block">Sprawdź czy to dla Ciebie →</a>
         </div>
         <div class="pricing-variant pricing-variant-custom">
           <div class="pricing-variant-name">Indywidualnie</div>
@@ -457,7 +466,7 @@
             <li>✓ Specyficzny model wdrożenia</li>
             <li>✓ Pricing dopasowany do Twoich potrzeb</li>
           </ul>
-          <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-outline-sm" target="_blank" rel="noopener" style="margin-top:16px;display:inline-block">Porozmawiajmy →</a>
+          <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-outline-dark" target="_blank" rel="noopener" style="margin-top:16px;display:inline-block">Sprawdź czy to dla Ciebie →</a>
         </div>
       </div>
 
@@ -518,7 +527,7 @@
           </div>
           <div class="testimonial-author">
             <div class="testimonial-photo-wrap">
-              <img src="assets/photo-mateusz-kotowski.png" alt="Mateusz Kotowski" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <img src="assets/photo-mateusz-kotowski.jpg" alt="Mateusz Kotowski" class="testimonial-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="testimonial-avatar-fallback">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
@@ -604,24 +613,32 @@
         </details>
 
         <details class="faq-item">
+          <summary class="faq-question">Co jeśli moje dane są w nieładzie?</summary>
+          <div class="faq-answer">
+            <p>Właśnie po to jest darmowa weryfikacja danych — zanim cokolwiek podpiszemy, przesyłasz nam wycinek danych (max 50 rekordów), a my sprawdzamy czy i co wymaga naprawy. Dostaniesz konkretną listę: co jest ok i co trzeba poprawić.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
           <summary class="faq-question">Jak długo trwa wdrożenie?</summary>
           <div class="faq-answer">
             <p>Standardowa ścieżka składa się z 5 etapów:</p>
             <ol>
               <li><strong>Rozmowa wstępna</strong> — 1–2h, określamy zakres i czy nasze rozwiązanie pasuje do Twojej firmy</li>
-              <li><strong>Darmowa weryfikacja danych</strong> — 7 dni, sprawdzamy Twoje dane testowe i generujemy przykładowy cennik</li>
+              <li><strong>Darmowa weryfikacja danych</strong> — 1 dzień, sprawdzamy Twoje dane testowe</li>
               <li><strong>Przygotowanie danych przez Twój zespół</strong> — czas zależy od porządku w Twoim ERP (0–60 dni)</li>
               <li><strong>Layout graficzny</strong> — 7–30 dni, zależnie od wybranego wariantu</li>
               <li><strong>Budowa systemu</strong> — 14 dni roboczych</li>
             </ol>
-            <p>Najdłuższy etap jest zawsze po Twojej stronie — czystość danych to klucz.</p>
+            <p>Poprawność i kompletność danych jest kluczowym czynnikiem całego procesu.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Czy muszę rezygnować z Excela lub ERP?</summary>
+          <summary class="faq-question">Na czym technicznie działa system?</summary>
           <div class="faq-answer">
-            <p>Nie. Jednorazowo przenosimy Twoje dane z Excela lub ERP do Google Sheets — to zajmuje ok. 1–2h wspólnej pracy. Potem Sheets to Twoja baza: edytujesz ją jak każdy arkusz, a system generuje cenniki na podstawie tego, co tam wpiszesz. Potrzebujesz tylko konta Google (podstawowy Google Workspace to ok. 6 USD/mc).</p>
+            <p>To nasz autorski skrypt oparty na Google Apps Script — tworzony zawsze dla konkretnego projektu, nie gotowy szablon. Do działania potrzebujesz danych w formacie .csv (eksportuje go każdy ERP i arkusz kalkulacyjny). Ważne: plik .csv musi mieć konkretne, ustalone z nami kolumny — ich strukturę definiujemy wspólnie na etapie weryfikacji danych, zanim cokolwiek podpiszemy.</p>
+            <p>System produkuje wyłącznie cenniki dedykowane per klient — nie generujemy cennika bazowego. Jeśli korporacyjna polityka IT wyklucza Google — skontaktuj się z nami, ocenimy alternatywy.</p>
           </div>
         </details>
 
@@ -636,15 +653,23 @@
           <summary class="faq-question">Kiedy i za co dokładnie płacę?</summary>
           <div class="faq-answer">
             <p>Model 50/50: 50% przy podpisaniu zlecenia, 50% po wspólnej akceptacji gotowego systemu. Jeśli nie wygenerujemy cennika spełniającego wspólnie zdefiniowane założenia — zwracamy zaliczkę w całości. Każda ze stron może też wycofać się w dowolnym momencie bez konsekwencji.</p>
-            <p>Po 6 miesiącach wsparcia technicznego możesz przedłużyć opiekę — skontaktuj się z nami przed wygaśnięciem okresu.</p>
+            <p>Po 6 miesiącach wsparcia technicznego możesz przedłużyć opiekę lub korzystać z systemu dalej samodzielnie — w takiej formie w jakiej jest, bez wsparcia technicznego.</p>
           </div>
         </details>
 
         <details class="faq-item">
           <summary class="faq-question">Co po cenniku? Czy system można rozbudować?</summary>
           <div class="faq-answer">
-            <p>Tak. Gdy dane masz już w jednym arkuszu i system działa, naturalnym kolejnym krokiem są <strong>karty produktów</strong> — większe zdjęcie, pełen opis techniczny, certyfikaty, materiały. Klienci najpierw dostają cennik, a potem pytają o szczegóły konkretnych produktów — karty to odpowiedź na to zapytanie.</p>
-            <p>Możliwe rozszerzenia: wersja angielska cennika (dla eksporterów), integracja z Twoim ERP (dane płyną automatycznie bez ręcznego arkusza), nowy layout po rebrandingu. Wszystko w oparciu o te same dane które już masz.</p>
+            <p>Tak. Gdy dane masz już w jednym miejscu i system działa, naturalnym kolejnym krokiem są <strong>karty produktów</strong> — większe zdjęcie, pełen opis techniczny, certyfikaty, materiały. To osobna usługa, którą ofertujemy — klienci najpierw dostają cennik, a potem pytają o szczegóły konkretnych produktów, karty to odpowiedź na to zapytanie.</p>
+            <p>Możliwe rozszerzenia: wersja językowa cennika (patrz niżej), nowy layout po rebrandingu. Wszystko w oparciu o te same dane, które już masz.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Czy cennik może być w innym języku?</summary>
+          <div class="faq-answer">
+            <p>Tak — jedna dodatkowa wersja językowa (poza polską) jest w cenie. To bezpośrednie wsparcie eksportu Twoich produktów: klient zagraniczny dostaje cennik w swoim języku, z cenami w odpowiedniej walucie.</p>
+            <p>Tłumaczenie copy nie jest po naszej stronie — nie obsługujemy obcych języków w zakresie treści. Wspólnie ustalimy jak najlepiej to zorganizować (Twój tłumacz, DeepL lub inny sposób).</p>
           </div>
         </details>
 
