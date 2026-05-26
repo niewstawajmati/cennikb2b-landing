@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920" />
+  <title>CennikB2B — tło video</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0F2040;
+      position: relative;
+    }
+
+    /* gradient */
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 1100px 800px at 20% 55%, rgba(249,115,22,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 800px 600px at 85% 25%, rgba(249,115,22,0.05) 0%, transparent 65%),
+        linear-gradient(140deg, #081526 0%, #0F2040 45%, #0d1e3a 100%);
+    }
+
+    /* dot grid */
+    .bg-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.055) 1.5px, transparent 1.5px);
+      background-size: 52px 52px;
+    }
+
+    /* decorative circles — top right */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+    }
+    .circle-1 {
+      width: 1000px; height: 1000px;
+      top: -420px; right: -420px;
+      border: 100px solid rgba(249,115,22,0.04);
+    }
+    .circle-2 {
+      width: 650px; height: 650px;
+      top: -240px; right: -240px;
+      border: 1.5px solid rgba(249,115,22,0.1);
+    }
+    .circle-3 {
+      width: 340px; height: 340px;
+      top: -80px; right: -80px;
+      border: 1px solid rgba(249,115,22,0.14);
+    }
+
+    /* decorative circles — bottom left */
+    .circle-bl {
+      width: 800px; height: 800px;
+      bottom: -380px; left: -380px;
+      border: 80px solid rgba(255,255,255,0.02);
+    }
+    .circle-bl2 {
+      width: 480px; height: 480px;
+      bottom: -200px; left: -200px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* orange vertical stripe — left edge */
+    .stripe-left {
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        #F97316 25%,
+        #F97316 75%,
+        transparent 100%
+      );
+    }
+
+    /* orange horizontal bar — bottom */
+    .stripe-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        #F97316 15%,
+        #F97316 85%,
+        transparent 100%
+      );
+      opacity: 0.5;
+    }
+
+    /* logo — centered, large, subtle */
+    .logo-wrap {
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.18;
+    }
+    .logo-wrap img {
+      height: 280px;
+      display: block;
+    }
+
+    /* logo — bottom left, visible */
+    .logo-corner {
+      position: absolute;
+      z-index: 20;
+      left: 72px;
+      bottom: 52px;
+    }
+    .logo-corner img {
+      height: 38px;
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient"></div>
+  <div class="bg-dots"></div>
+
+  <div class="circle circle-1"></div>
+  <div class="circle circle-2"></div>
+  <div class="circle circle-3"></div>
+  <div class="circle circle-bl"></div>
+  <div class="circle circle-bl2"></div>
+
+  <div class="stripe-left"></div>
+  <div class="stripe-bottom"></div>
+
+  <!-- watermark logo centered -->
+  <div class="logo-wrap">
+    <img src="assets/logo-cennikb2b.png" alt="" aria-hidden="true" />
+  </div>
+
+  <!-- logo corner -->
+  <div class="logo-corner">
+    <img src="assets/logo-cennikb2b.png" alt="CennikB2B" />
+  </div>
+
+</body>
+</html>

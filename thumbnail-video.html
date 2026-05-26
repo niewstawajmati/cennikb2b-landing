@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280" />
+  <title>Thumbnail — Z CSV do katalogu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+      background: #0F2040;
+      font-family: 'Inter', system-ui, sans-serif;
+      position: relative;
+    }
+
+    /* ── background texture ── */
+    .bg-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1.5px, transparent 1.5px);
+      background-size: 40px 40px;
+    }
+    .bg-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 40%, rgba(5,12,25,0.6) 100%);
+    }
+
+    /* ── layout: 3 columns ── */
+    .layout {
+      position: relative;
+      z-index: 10;
+      width: 1280px;
+      height: 720px;
+      display: grid;
+      grid-template-columns: 1fr 176px 1fr;
+      align-items: center;
+      padding: 0;
+    }
+
+    /* ────────────────────────────────
+       PANEL PRZED (lewy)
+    ──────────────────────────────── */
+    .panel-before {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 28px 48px 48px;
+      gap: 20px;
+      position: relative;
+    }
+
+    .badge-before {
+      position: absolute;
+      top: 40px;
+      left: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 5px;
+    }
+
+    /* spreadsheet mock */
+    .sheet-wrap {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    /* Excel-style top bar */
+    .sheet-topbar {
+      background: #217346;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sheet-topbar-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .sheet-topbar-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+    .sheet-topbar-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      margin-left: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* sheet grid */
+    .sheet-grid {
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    /* row numbers column + header row */
+    .sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 8.5px;
+    }
+    .sheet-table th, .sheet-table td {
+      border: 1px solid #d0d7de;
+      padding: 2.5px 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 80px;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+    /* row number col */
+    .sheet-table .rn {
+      background: #f2f2f2;
+      color: #888;
+      text-align: center;
+      font-size: 8px;
+      width: 18px;
+      min-width: 18px;
+      border-color: #d0d7de;
+    }
+    /* header row */
+    .sheet-table thead th {
+      background: #1a5276;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 8px;
+      letter-spacing: 0.02em;
+      border-color: #154360;
+      padding: 3.5px 5px;
+    }
+    .sheet-table thead th.rn {
+      background: #f2f2f2;
+      color: #888;
+    }
+    /* alternating rows */
+    .sheet-table tbody tr:nth-child(even) td:not(.rn) {
+      background: #f8f9fa;
+    }
+    .sheet-table tbody tr:hover td:not(.rn) {
+      background: #e8f4fd;
+    }
+    /* highlight cells */
+    .cell-price {
+      color: #1a7a2e;
+      font-weight: 700;
+    }
+    .cell-code {
+      color: #0d47a1;
+      font-size: 7.5px;
+    }
+    .cell-img {
+      color: #8e6b1a;
+      font-size: 7px;
+    }
+
+    /* sheet tab at bottom */
+    .sheet-tab-bar {
+      background: #f2f2f2;
+      border-top: 1px solid #d0d7de;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .sheet-tab {
+      background: #217346;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 2px 2px 0 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ────────────────────────────────
+       MIDDLE: arrow + time
+    ──────────────────────────────── */
+    .middle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .arrow-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .time-badge {
+      background: #F97316;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      padding: 10px 18px;
+      border-radius: 8px;
+      line-height: 1;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.45);
+    }
+    .time-badge small {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+      margin-top: 3px;
+    }
+
+    .arrow-svg {
+      color: #F97316;
+      filter: drop-shadow(0 0 8px rgba(249,115,22,0.4));
+    }
+
+    /* ────────────────────────────────
+       PANEL PO (prawy)
+    ──────────────────────────────── */
+    .panel-after {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 48px 48px 28px;
+      gap: 20px;
+      position: relative;
+    }
+
+    .badge-after {
+      position: absolute;
+      top: 40px;
+      right: 48px;
+      background: rgba(249,115,22,0.2);
+      border: 1.5px solid rgba(249,115,22,0.45);
+      color: #F97316;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 5px;
+    }
+
+    .catalog-wrap {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(249,115,22,0.25);
+      position: relative;
+    }
+    .catalog-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ────────────────────────────────
+       BOTTOM BAR
+    ──────────────────────────────── */
+    .bottom-bar {
+      position: absolute;
+      z-index: 20;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: rgba(5, 14, 30, 0.75);
+      backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+    }
+
+    .bottom-headline {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .bottom-headline span {
+      color: #F97316;
+    }
+
+    .bottom-logo img {
+      height: 26px;
+      display: block;
+    }
+
+    /* ── orange edge accent ── */
+    .edge-left {
+      position: absolute;
+      z-index: 30;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(180deg, transparent 0%, #F97316 20%, #F97316 80%, transparent 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-dots"></div>
+  <div class="bg-vignette"></div>
+  <div class="edge-left"></div>
+
+  <div class="layout">
+
+    <!-- ══ PRZED ══ -->
+    <div class="panel-before">
+      <div class="badge-before">PRZED</div>
+
+      <div class="sheet-wrap">
+        <!-- Excel top bar -->
+        <div class="sheet-topbar">
+          <div class="sheet-topbar-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="sheet-topbar-name">Mebella.pl — dane z ERP.xlsx</div>
+        </div>
+
+        <!-- Spreadsheet grid -->
+        <div class="sheet-grid">
+          <table class="sheet-table">
+            <thead>
+              <tr>
+                <th class="rn"></th>
+                <th>A — rodzina</th>
+                <th>B — podrodzina</th>
+                <th>C — zdjecie_id</th>
+                <th>D — kol1</th>
+                <th>E — kol2</th>
+                <th>F — wys1</th>
+                <th>G — waga1</th>
+                <th>H — maxtop1</th>
+                <th>I — nazwa1</th>
+                <th>J — cena11</th>
+                <th>K — kod11</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rn">2</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND FIX Ø195</td>
+                <td class="cell-img">1Rr1B2r-hMnPVH1xnd…</td>
+                <td>9 *Steel</td>
+                <td></td>
+                <td>17,1</td>
+                <td>900×900</td>
+                <td>ø1000</td>
+                <td>Flat Steel Round Fix - 09 Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">214-RD195STD-RD76STD-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">3</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND MINI Ø295</td>
+                <td class="cell-img">1SC-gzAWDDoazV4_Pv…</td>
+                <td>09 SLIM</td>
+                <td>*Steel</td>
+                <td>8,2</td>
+                <td>500×500</td>
+                <td>ø600</td>
+                <td>Flat Steel Round Mini - 09 Slim Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">214-RD295RAL-RD76RAL-600-3</td>
+              </tr>
+              <tr>
+                <td class="rn">4</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND MINI Ø295</td>
+                <td class="cell-img">1SQAWMZ565yRZWeFQ…</td>
+                <td>09 SLIM S</td>
+                <td>*Steel</td>
+                <td>9,5</td>
+                <td>500×500</td>
+                <td>ø600</td>
+                <td>Flat Steel Round Mini - 09 Slim S Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD295RD60STD-S150STD-600</td>
+              </tr>
+              <tr>
+                <td class="rn">5</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND MINI Ø295</td>
+                <td class="cell-img">1Fri8RMMExVI4SKUp…</td>
+                <td>01 SLIM</td>
+                <td>*Steel</td>
+                <td>8,2</td>
+                <td>500×500</td>
+                <td>ø600</td>
+                <td>Flat Steel Round Mini - 01 Slim S Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD295RAL-RD60RAL-600-3</td>
+              </tr>
+              <tr>
+                <td class="rn">6</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND MINI Ø295</td>
+                <td class="cell-img">1JLWGEaeO_vtdnMuT…</td>
+                <td>01 SLIM S</td>
+                <td>****Wood</td>
+                <td>8,2</td>
+                <td>500×500</td>
+                <td>ø600</td>
+                <td>Flat Steel Round Mini - 01 Slim S Wood Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD295STD-RD76SD-S150STD</td>
+              </tr>
+              <tr>
+                <td class="rn">7</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">1V1_9kTElKj9g-iI75g…</td>
+                <td>09 SLIM</td>
+                <td>*Steel</td>
+                <td>12,4</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 Slim Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405RD60STD-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">8</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">1awmxVMODJQwtAkQr…</td>
+                <td>09 SLIM S</td>
+                <td>*Steel</td>
+                <td>12,4</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 Slim S Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405RAL-RD60RAL-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">9</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">1HaDbsReUpIJnLrFDM…</td>
+                <td>09 SLIM</td>
+                <td>**Inox</td>
+                <td>12,4</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 Slim Inox Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405SAT-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">10</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">10xdZOqw3TvtDI23Zu…</td>
+                <td>09 P2</td>
+                <td>***Brass</td>
+                <td>12,8</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 Brass Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405BR-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">11</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">1TKZ5jcBGy6EoF1s1Q…</td>
+                <td>9 *Steel</td>
+                <td></td>
+                <td>12,9</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405STD-RD76STD-600-2</td>
+              </tr>
+              <tr>
+                <td class="rn">12</td>
+                <td>FLAT STEEL</td>
+                <td>ROUND SMALL Ø405</td>
+                <td class="cell-img">1kTCTiZiX3SBXa8Mf0…</td>
+                <td>09 S</td>
+                <td></td>
+                <td>12,9</td>
+                <td>700×700</td>
+                <td>ø800</td>
+                <td>Flat Steel Round Small - 09 S Steel Coffee</td>
+                <td class="cell-price">99,99</td>
+                <td class="cell-code">201-RD405STD-RD76STD-S150STD</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sheet tab -->
+        <div class="sheet-tab-bar">
+          <div class="sheet-tab">Mebella.pl — dane z erp</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ŚRODEK: strzałka + czas ══ -->
+    <div class="middle">
+      <div class="arrow-wrap">
+        <div class="time-badge">
+          &lt; 15 MIN
+          <small>automatycznie</small>
+        </div>
+        <svg class="arrow-svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ══ PO ══ -->
+    <div class="panel-after">
+      <div class="badge-after">PO</div>
+
+      <div class="catalog-wrap">
+        <img src="assets/catalog-page-4.png" alt="Gotowy katalog Mebella" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- bottom bar -->
+  <div class="bottom-bar">
+    <div class="bottom-headline">Z pliku <span>.CSV</span> do gotowego katalogu — bez grafika, bez Excela</div>
+    <div class="bottom-logo">
+      <img src="assets/logo-cennikb2b.png" alt="CennikB2B" />
+    </div>
+  </div>
+
+</body>
+</html>
