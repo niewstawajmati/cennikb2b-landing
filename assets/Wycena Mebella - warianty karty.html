@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mebella — warianty karty produktu</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    background: #6b6e72;
+    padding: 40px 40px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── COMPARISON SCAFFOLD ── */
+  .compare-intro {
+    max-width: 1100px;
+    margin: 0 auto 36px;
+    color: #fff;
+  }
+  .compare-intro h1 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 10px;
+  }
+  .compare-intro p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e2e3e5;
+    max-width: 760px;
+  }
+
+  .variants-row {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: 24px;
+  }
+
+  .variant-col { flex: 0 0 auto; }
+
+  .variant-tag {
+    color: #fff;
+    margin-bottom: 14px;
+    max-width: 21cm;
+  }
+  .variant-tag .v-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #b9bbbe;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .variant-tag .v-name {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .variant-tag .v-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #d6d7d9;
+  }
+
+  /* ── A4 PAGE ── */
+  .page {
+    width: 21cm;
+    background: #fff;
+    padding: 13mm 14mm;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  /* ════════════════════════════════════════════
+     COMPACT MASTHEAD (shared across variants)
+     ════════════════════════════════════════════ */
+  .masthead { margin-bottom: 26px; }
+
+  .mast-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .mast-logo-img { height: 28px; width: auto; display: block; }
+  .mast-logo-text { font-size: 19px; font-weight: 900; letter-spacing: -0.5px; }
+
+  .mast-ref {
+    font-size: 11.5px;
+    color: #555;
+    text-align: right;
+    line-height: 1.5;
+  }
+  .mast-ref .ref-kicker {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #aaa;
+    margin-right: 4px;
+  }
+  .mast-ref b { color: #1a1a1a; font-weight: 700; }
+
+  .mast-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding-top: 12px;
+    border-bottom: 2.5px solid #1a1a1a;
+    padding-bottom: 14px;
+  }
+  .mast-party { min-width: 0; }
+  .mast-party .party-label {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #aaa;
+    margin-bottom: 5px;
+  }
+  .mast-party .party-name { font-weight: 700; font-size: 13.5px; line-height: 1.4; }
+  .mast-party .party-sub { color: #666; font-size: 12px; line-height: 1.5; }
+
+  .mast-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .mast-contact .contact-text { line-height: 1.45; }
+  .mast-contact .contact-name { font-weight: 700; font-size: 13px; }
+  .mast-contact .contact-mail { color: #666; font-size: 12px; }
+  .contact-photo {
+    width: 42px; height: 42px; border-radius: 50%;
+    object-fit: cover; background: #e8e8e8; flex-shrink: 0; display: block;
+    order: 2;
+  }
+
+  /* ── RECOMMENDATION INTRO ── */
+  .recommendation {
+    margin-bottom: 26px;
+    padding: 14px 18px;
+    background: #f7f7f5;
+    border-left: 3px solid #1a1a1a;
+  }
+  .recommendation .rec-label {
+    font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.2px;
+    color: #999; margin-bottom: 6px;
+  }
+  .recommendation .rec-body { font-size: 12.5px; line-height: 1.65; color: #444; }
+
+  /* ── SECTION HEADING ── */
+  .sec-head {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px;
+    color: #888; font-weight: 700;
+    padding-bottom: 7px; margin-bottom: 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  /* ── SWATCH PRIMITIVES (shared) ── */
+  .ral-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    vertical-align: middle;
+  }
+  .ral-sq {
+    width: 13px; height: 13px; border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.18); flex-shrink: 0;
+    display: inline-block;
+  }
+  /* hatched placeholder for unconfirmed colours */
+  .ral-sq.unconfirmed {
+    background-image: repeating-linear-gradient(45deg,#e7e7e7 0 4px,#cfcfcf 4px 8px);
+    border-style: dashed;
+  }
+  .hpl-tile {
+    display: inline-block;
+    width: 46px; height: 46px; border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background-size: cover; background-position: center;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  .code {
+    color: #b3b3b3; font-size: 10.5px;
+    font-family: 'Courier New', monospace; letter-spacing: 0.2px;
+  }
+
+  /* edge-profile (frez) thumbnail — placeholder do czasu zdjęć */
+  .frez-swatch {
+    display: inline-block; width: 30px; height: 30px;
+    vertical-align: middle; margin-right: 6px;
+  }
+  .frez-swatch svg { display: block; width: 100%; height: 100%; }
+
+  /* blat — główne zdjęcie pokazuje KSZTAŁT blatu w wybranym dekorze (nie sam dekor) */
+  .blat-shape {
+    display: block; background-size: cover; background-position: center;
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.14);
+  }
+  .blat-shape.round  { border-radius: 50%; }
+  .blat-shape.square { border-radius: 4px; }
+  .blat-shape.rect   { border-radius: 4px; }
+  .vA .blat-shape, .vB .blat-shape { width: 132px; height: 132px; }
+  .vA .blat-shape.rect, .vB .blat-shape.rect { width: 142px; height: 98px; }
+  .vC .blat-shape { width: 150px; height: 150px; }
+  .vC .blat-shape.rect { width: 162px; height: 110px; }
+
+  /* ════════════════════════════════════════════
+     VARIANT A — wzbogacona lista
+     ════════════════════════════════════════════ */
+  .vA .ptable { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .vA .ptable thead th {
+    text-align: left; font-size: 9.5px; text-transform: uppercase;
+    letter-spacing: 0.8px; color: #999; font-weight: 600;
+    padding: 8px 10px 8px 0;
+  }
+  .vA .ptable th.r, .vA .ptable td.r { text-align: right; }
+  .vA .ptable td { padding: 14px 10px 14px 0; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  .vA .ptable td.r { white-space: nowrap; }
+  .vA .col-qty { width: 56px; } .vA .col-price { width: 92px; } .vA .col-total { width: 96px; font-weight: 700; }
+  .vA .sec-row td { border-bottom: none; padding-top: 18px; }
+  .vA .prow { display: flex; gap: 14px; align-items: flex-start; }
+  .vA .pimg { width: 150px; height: 150px; object-fit: contain; background: #f5f5f5; flex-shrink: 0; }
+  .vA .pinfo { flex: 1; min-width: 0; }
+  .vA .pname { font-weight: 700; font-size: 13.5px; margin-bottom: 8px; }
+  .vA .spec { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 12px; margin-bottom: 9px; }
+  .vA .spec dt { color: #999; }
+  .vA .spec dd { color: #333; }
+  .vA .finish { display: flex; flex-direction: column; gap: 5px; margin-bottom: 9px; }
+  .vA .finish-line { font-size: 12px; color: #333; }
+  .vA .finish-line .fl-label { color: #999; }
+  .vA .hpl-row { display: flex; align-items: center; gap: 9px; }
+  .vA .hpl-row .hpl-meta { font-size: 12px; }
+  .vA .hpl-row .hpl-name { font-weight: 600; }
+  .vA .hpl-row .hpl-grp { color: #999; font-size: 11px; }
+  .vA .vbadge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 19px; height: 19px; background: #1a1a1a; color: #fff;
+    font-size: 10px; font-weight: 700; border-radius: 3px; margin-right: 7px;
+    vertical-align: middle;
+  }
+
+  /* ════════════════════════════════════════════
+     VARIANT B — karty edytorskie
+     ════════════════════════════════════════════ */
+  .vB .pcards { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+  .vB .sec-row {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px;
+    color: #888; font-weight: 700; padding: 18px 0 8px;
+  }
+  .vB .pcard {
+    display: flex; gap: 16px; align-items: stretch;
+    padding: 16px 0; border-bottom: 1px solid #eee;
+  }
+  .vB .pimg { width: 150px; height: 150px; object-fit: contain; background: #f5f5f5; flex-shrink: 0; }
+  .vB .pbody { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .vB .pname { font-weight: 700; font-size: 14px; margin-bottom: 9px; }
+  .vB .pname .vbadge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; background: #1a1a1a; color: #fff;
+    font-size: 10px; font-weight: 700; border-radius: 3px; margin-right: 8px;
+    vertical-align: middle;
+  }
+  .vB .spec-grid {
+    display: grid; grid-template-columns: repeat(2, auto); gap: 3px 28px;
+    font-size: 12px; margin-bottom: 12px; align-content: start;
+  }
+  .vB .spec-grid .sg-label { color: #999; margin-right: 6px; }
+  .vB .finish-strip { display: flex; gap: 18px; margin-top: auto; padding-top: 4px; flex-wrap: wrap; }
+  .vB .fin-item { display: flex; align-items: center; gap: 8px; }
+  .vB .fin-item .fin-cap { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; color: #aaa; }
+  .vB .fin-item .fin-val { font-size: 12px; font-weight: 600; }
+  .vB .fin-item .ral-sq { width: 22px; height: 22px; }
+  .vB .pprice {
+    flex-shrink: 0; width: 128px; padding-left: 16px; border-left: 1px solid #eee;
+    display: flex; flex-direction: column; justify-content: center; text-align: right;
+  }
+  .vB .pprice .pp-qty { font-size: 11.5px; color: #888; margin-bottom: 6px; }
+  .vB .pprice .pp-unit { font-size: 12px; color: #555; margin-bottom: 8px; }
+  .vB .pprice .pp-total { font-size: 16px; font-weight: 800; }
+  .vB .pprice .pp-cap { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #bbb; margin-bottom: 2px; }
+  .vB .code { display: block; margin-top: 8px; }
+
+  /* ════════════════════════════════════════════
+     VARIANT C — galeria wizualna
+     ════════════════════════════════════════════ */
+  .vC .pgrid { display: flex; flex-direction: column; gap: 0; margin-top: 6px; }
+  .vC .sec-row {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px;
+    color: #888; font-weight: 700; padding: 20px 0 10px;
+  }
+  .vC .pcard { padding: 18px 0; border-bottom: 1px solid #eee; }
+  .vC .pcard-top { display: flex; gap: 18px; align-items: flex-start; }
+  .vC .pimg { width: 168px; height: 168px; object-fit: contain; background: #f5f5f5; flex-shrink: 0; }
+  .vC .pmain { flex: 1; min-width: 0; }
+  .vC .pname { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+  .vC .pname .vbadge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; background: #1a1a1a; color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 3px; margin-right: 9px;
+    vertical-align: middle;
+  }
+  .vC .psub { color: #777; font-size: 12px; margin-bottom: 14px; }
+  .vC .swatch-rail { display: flex; gap: 22px; margin-bottom: 14px; }
+  .vC .sw-item { text-align: center; }
+  .vC .sw-item .sw-box { display: block; margin-bottom: 6px; }
+  .vC .sw-item .ral-sq { width: 50px; height: 50px; border-radius: 4px; }
+  .vC .sw-item .hpl-tile { width: 50px; height: 50px; }
+  .vC .sw-item .frez-swatch { width: 50px; height: 50px; margin-right: 0; }
+  .vC .sw-item .sw-cap { font-size: 9px; text-transform: uppercase; letter-spacing: 0.7px; color: #aaa; }
+  .vC .sw-item .sw-val { font-size: 11px; font-weight: 600; color: #333; margin-top: 1px; }
+  .vC .specbar {
+    display: flex; flex-wrap: wrap; gap: 6px 8px; font-size: 11px; margin-bottom: 4px;
+  }
+  .vC .specbar .sb-pill {
+    background: #f2f2f0; border-radius: 3px; padding: 3px 9px; color: #444; white-space: nowrap;
+  }
+  .vC .specbar .sb-pill b { color: #1a1a1a; }
+  .vC .pcard-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; }
+  .vC .code { align-self: flex-end; }
+  .vC .price-tag { text-align: right; white-space: nowrap; }
+  .vC .price-tag .pt-q { font-size: 11.5px; color: #888; }
+  .vC .price-tag .pt-u { font-size: 12px; color: #555; margin: 0 0 3px; }
+  .vC .price-tag .pt-t { font-size: 18px; font-weight: 800; }
+
+  /* ── TOTALS (shared) ── */
+  .totals { display: flex; justify-content: flex-end; margin-top: 22px; }
+  .totals-box { min-width: 300px; border-top: 2px solid #1a1a1a; padding-top: 4px; }
+  .totals-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 12.5px; }
+  .totals-row:last-child { border-bottom: none; }
+  .totals-row .tl { color: #555; }
+  .totals-row.grand { font-size: 18px; font-weight: 800; padding-top: 12px; border-bottom: none; }
+  .totals-row.grand .tl { color: #1a1a1a; }
+  .totals-note { font-size: 10.5px; color: #aaa; text-align: right; margin-top: 8px; line-height: 1.5; }
+
+  /* ── FOOTER (shared, condensed) ── */
+  .pfooter { border-top: 1px solid #eee; margin-top: 30px; padding-top: 16px; font-size: 10px; color: #a0a0a0; line-height: 1.6; }
+  .pfooter p { margin-bottom: 4px; }
+  .pfooter .brand { color: #c8c8c8; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#1a1a1a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#1a1a1a"/>
+    <rect x="360" y="150" width="480" height="560" rx="10" fill="#ffffff"/>
+    <text x="600" y="300" font-family="Helvetica, Arial, sans-serif" font-size="58" font-weight="900" fill="#1a1a1a" text-anchor="middle" letter-spacing="-1">[MEBELLA]</text>
+    <rect x="410" y="345" width="380" height="6" fill="#1a1a1a"/>
+    <circle cx="470" cy="455" r="46" fill="#7d5836"/>
+    <rect x="545" y="425" width="240" height="14" rx="4" fill="#cfcfcf"/>
+    <rect x="545" y="455" width="180" height="12" rx="4" fill="#e2e2e2"/>
+    <rect x="545" y="480" width="210" height="12" rx="4" fill="#e2e2e2"/>
+    <circle cx="470" cy="585" r="46" fill="#c4a06a"/>
+    <rect x="545" y="555" width="240" height="14" rx="4" fill="#cfcfcf"/>
+    <rect x="545" y="585" width="180" height="12" rx="4" fill="#e2e2e2"/>
+    <rect x="545" y="610" width="210" height="12" rx="4" fill="#e2e2e2"/>
+  </svg>
+</template>
+
+<div class="compare-intro">
+  <h1>Mebella — redesign karty oferty · 3 warianty układu</h1>
+  <p>Wspólne dla wszystkich: zwarty nagłówek (logo + handlowiec + klient w jednej strefie, mniej pionu), rekomendacja jako intro, zdjęcie produktu 150&nbsp;px, działająca próbka koloru RAL (z tablicy RAL→HEX) i miniatura dekoru HPL. Różni się <b>układ karty produktu</b>. Te same dane w każdym wariancie — porównujesz wyłącznie formę.</p>
+</div>
+
+<div class="variants-row">
+
+  <!-- ══════════════════════════ VARIANT A ══════════════════════════ -->
+  <div class="variant-col">
+    <div class="variant-tag">
+      <span class="v-kicker">Wariant A</span>
+      <div class="v-name">Wzbogacona lista</div>
+      <div class="v-desc">Najbliżej obecnego układu tabelarycznego — najniższe ryzyko. Foto 150&nbsp;px, parametry jako oddzielona lista, próbka RAL w linii wykończenia, dekor HPL jako mała kafelka.</div>
+    </div>
+    <div class="page vA">
+
+      <!-- MASTHEAD -->
+      <div class="masthead">
+        <div class="mast-top">
+          <img class="mast-logo-img" src="https://lh3.googleusercontent.com/d/1Xfg034BA9sSiPeUANZI2XjKEXEYdqjE2" alt="Mebella" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+          <div class="mast-logo-text" style="display:none">MEBELLA</div>
+          <div class="mast-ref">
+            <span class="ref-kicker">Oferta</span><b>OF/2026/3701</b> &nbsp;·&nbsp; 19.05.2026 &nbsp;·&nbsp; ważna do 19.06.2026
+          </div>
+        </div>
+        <div class="mast-bottom">
+          <div class="mast-party">
+            <div class="party-label">Oferta dla</div>
+            <div class="party-name">Paged Meble S.A.</div>
+            <div class="party-sub">Att.: Ewa Krzysik</div>
+          </div>
+          <div class="mast-contact">
+            <div class="contact-text">
+              <div class="contact-name">Ewa Dulcet</div>
+              <div class="contact-mail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e6839187a68b8384838a8a87c8968a">[email&#160;protected]</a></div>
+            </div>
+            <img class="contact-photo" src="https://lh3.googleusercontent.com/d/1PVb208bn-JuDL5CJESeCPpPsng_2cfc0" alt="" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </div>
+
+      <!-- RECOMMENDATION INTRO -->
+      <div class="recommendation">
+        <div class="rec-label">Nasza rekomendacja</div>
+        <div class="rec-body">Do hotelowej restauracji proponujemy podstawę Flat Steel w wersji Slim — stabilna, smukła wizualnie, w czerni RAL 9005. Blaty zestawiliśmy w dwóch wariantach cenowych, żeby łatwo dopasować je do budżetu projektu.</div>
+      </div>
+
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th>Produkt</th>
+            <th class="r col-qty">Szt.</th>
+            <th class="r col-price">Cena jedn.</th>
+            <th class="r col-total">Wartość</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sec-row"><td colspan="4"><div class="sec-head">Podstawy stołu</div></td></tr>
+          <tr>
+            <td>
+              <div class="prow">
+                <img class="pimg" src="https://lh3.googleusercontent.com/d/1ko0fb4TEwwbAe1u0-CB0fl9RbV3_7cve" alt="" onerror="this.style.opacity='0'">
+                <div class="pinfo">
+                  <div class="pname">Flat Steel Round Big — 09 Slim | Dining</div>
+                  <dl class="spec">
+                    <dt>Wysokość</dt><dd>720 mm</dd>
+                    <dt>Mocowanie</dt><dd>KSO</dd>
+                    <dt>Skarpeta</dt><dd>brak</dd>
+                  </dl>
+                  <div class="finish">
+                    <div class="finish-line"><span class="fl-label">Baza:</span> <span class="ral-chip"><span class="ral-sq" data-ral="9005"></span> RAL 9005 czarny</span></div>
+                    <div class="finish-line"><span class="fl-label">Kolumna:</span> <span class="ral-chip"><span class="ral-sq" data-ral="9005"></span> RAL 9005 czarny</span></div>
+                  </div>
+                  <div class="code">201-RD565RAL-RD76RAL-720-1</div>
+                </div>
+              </div>
+            </td>
+            <td class="r col-qty">50 szt.</td>
+            <td class="r col-price">382,09 PLN</td>
+            <td class="r col-total">19 104,50 PLN</td>
+          </tr>
+
+          <tr class="sec-row"><td colspan="4"><div class="sec-head">Blaty — warianty cenowe (prosimy o wybór)</div></td></tr>
+          <tr>
+            <td>
+              <div class="prow">
+                <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="walnut"></span></div>
+                <div class="pinfo">
+                  <div class="pname"><span class="vbadge">A</span>Blat okrągły ø1000 mm — płyta wiórowa 20 mm</div>
+                  <dl class="spec">
+                    <dt>Materiał</dt><dd>Płyta wiórowa (CHIP)</dd>
+                    <dt>Grubość</dt><dd>20 mm</dd>
+                    <dt>Krawędź</dt><dd><span class="frez-swatch" data-frez="r3"></span>R3 — zaokrąglona · ABS dopas. do dekoru</dd>
+                  </dl>
+                  <div class="hpl-row">
+                    <span class="hpl-tile" data-tone="walnut"></span>
+                    <div class="hpl-meta"><span class="hpl-name">Lincoln Walnut H1714</span><br><span class="hpl-grp">Grupa II (HPL2)</span></div>
+                  </div>
+                  <div class="code" style="margin-top:8px;">CHIP-RD-1000x20-HPL2</div>
+                </div>
+              </div>
+            </td>
+            <td class="r col-qty">50 szt.</td>
+            <td class="r col-price">359,67 PLN</td>
+            <td class="r col-total">17 983,50 PLN</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="prow">
+                <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="oak"></span></div>
+                <div class="pinfo">
+                  <div class="pname"><span class="vbadge">B</span>Blat okrągły ø1000 mm — płyta wiórowa 20 mm</div>
+                  <dl class="spec">
+                    <dt>Materiał</dt><dd>Płyta wiórowa (CHIP)</dd>
+                    <dt>Grubość</dt><dd>20 mm</dd>
+                    <dt>Krawędź</dt><dd><span class="frez-swatch" data-frez="fazowana"></span>Fazowana · ABS dopas. do dekoru</dd>
+                  </dl>
+                  <div class="hpl-row">
+                    <span class="hpl-tile" data-tone="oak"></span>
+                    <div class="hpl-meta"><span class="hpl-name">Casella Natural Oak H1385</span><br><span class="hpl-grp">Grupa III (HPL3)</span></div>
+                  </div>
+                  <div class="code" style="margin-top:8px;">CHIP-RD-1000x20-HPL3</div>
+                </div>
+              </div>
+            </td>
+            <td class="r col-qty">50 szt.</td>
+            <td class="r col-price">637,26 PLN</td>
+            <td class="r col-total">31 863,00 PLN</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="totals">
+        <div class="totals-box">
+          <div class="totals-row"><span class="tl">Podstawy stołu — netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant A (HPL Gr. II)</span><span>17 983,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant B (HPL Gr. III)</span><span>31 863,00 PLN</span></div>
+          <div class="totals-row"><span class="tl">Transport</span><span>do uzgodnienia</span></div>
+          <div class="totals-row grand"><span class="tl">Podstawy netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-note">Cena łączna zależy od wybranego wariantu blatu.</div>
+        </div>
+      </div>
+
+      <div class="pfooter">
+        <p>Kolory i wykończenia na zdjęciach są poglądowe i mogą różnić się od rzeczywistych. Zalecamy zapoznanie się z próbkami materiałów.</p>
+        <p>Wymiary mogą różnić się od podanych ze względu na proces produkcji. Tolerancja: ±2 mm. Ceny netto, bez VAT i transportu.</p>
+        <p class="brand">Mebella · mebella.pl</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ VARIANT B ══════════════════════════ -->
+  <div class="variant-col">
+    <div class="variant-tag">
+      <span class="v-kicker">Wariant B</span>
+      <div class="v-name">Karty edytorskie</div>
+      <div class="v-desc">Każdy produkt to osobna karta z prawą szpaltą cenową. Wykończenia jako podpisany pasek próbek (baza / kolumna / dekor). Więcej powietrza, czytelniejsza hierarchia ceny.</div>
+    </div>
+    <div class="page vB">
+
+      <div class="masthead">
+        <div class="mast-top">
+          <img class="mast-logo-img" src="https://lh3.googleusercontent.com/d/1Xfg034BA9sSiPeUANZI2XjKEXEYdqjE2" alt="Mebella" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+          <div class="mast-logo-text" style="display:none">MEBELLA</div>
+          <div class="mast-ref">
+            <span class="ref-kicker">Oferta</span><b>OF/2026/3701</b> &nbsp;·&nbsp; 19.05.2026 &nbsp;·&nbsp; ważna do 19.06.2026
+          </div>
+        </div>
+        <div class="mast-bottom">
+          <div class="mast-party">
+            <div class="party-label">Oferta dla</div>
+            <div class="party-name">Paged Meble S.A.</div>
+            <div class="party-sub">Att.: Ewa Krzysik</div>
+          </div>
+          <div class="mast-contact">
+            <div class="contact-text">
+              <div class="contact-name">Ewa Dulcet</div>
+              <div class="contact-mail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5b495f7e535b5c5b52525f104e52">[email&#160;protected]</a></div>
+            </div>
+            <img class="contact-photo" src="https://lh3.googleusercontent.com/d/1PVb208bn-JuDL5CJESeCPpPsng_2cfc0" alt="" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <div class="rec-label">Nasza rekomendacja</div>
+        <div class="rec-body">Do hotelowej restauracji proponujemy podstawę Flat Steel w wersji Slim — stabilna, smukła wizualnie, w czerni RAL 9005. Blaty zestawiliśmy w dwóch wariantach cenowych, żeby łatwo dopasować je do budżetu projektu.</div>
+      </div>
+
+      <div class="pcards">
+        <div class="sec-row">Podstawy stołu</div>
+        <div class="pcard">
+          <img class="pimg" src="https://lh3.googleusercontent.com/d/1ko0fb4TEwwbAe1u0-CB0fl9RbV3_7cve" alt="" onerror="this.style.opacity='0'">
+          <div class="pbody">
+            <div class="pname">Flat Steel Round Big — 09 Slim | Dining</div>
+            <div class="spec-grid">
+              <div><span class="sg-label">Wysokość</span><b>720 mm</b></div>
+              <div><span class="sg-label">Mocowanie</span><b>KSO</b></div>
+              <div><span class="sg-label">Skarpeta</span><b>brak</b></div>
+              <div><span class="sg-label">Typ</span><b>jednokolumnowa</b></div>
+            </div>
+            <div class="finish-strip">
+              <div class="fin-item"><span class="ral-sq" data-ral="9005"></span><div><div class="fin-cap">Baza</div><div class="fin-val">RAL 9005</div></div></div>
+              <div class="fin-item"><span class="ral-sq" data-ral="9005"></span><div><div class="fin-cap">Kolumna</div><div class="fin-val">RAL 9005</div></div></div>
+            </div>
+            <span class="code">201-RD565RAL-RD76RAL-720-1</span>
+          </div>
+          <div class="pprice">
+            <div class="pp-qty">50 szt.</div>
+            <div class="pp-unit">382,09 PLN / szt.</div>
+            <div class="pp-cap">Wartość</div>
+            <div class="pp-total">19 104,50</div>
+          </div>
+        </div>
+
+        <div class="sec-row">Blaty — warianty cenowe (prosimy o wybór)</div>
+        <div class="pcard">
+          <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="walnut"></span></div>
+          <div class="pbody">
+            <div class="pname"><span class="vbadge">A</span>Blat okrągły ø1000 mm — płyta wiórowa 20 mm</div>
+            <div class="spec-grid">
+              <div><span class="sg-label">Materiał</span><b>Płyta wiórowa</b></div>
+              <div><span class="sg-label">Grubość</span><b>20 mm</b></div>
+              <div><span class="sg-label">Kształt</span><b>ø1000 mm</b></div>
+              <div><span class="sg-label">Krawędź</span><b>ABS dopas.</b></div>
+            </div>
+            <div class="finish-strip">
+              <div class="fin-item"><span class="hpl-tile" data-tone="walnut"></span><div><div class="fin-cap">Dekor HPL</div><div class="fin-val">Lincoln Walnut H1714 · Gr. II</div></div></div>
+              <div class="fin-item"><span class="frez-swatch" data-frez="r3"></span><div><div class="fin-cap">Frez krawędzi</div><div class="fin-val">R3 — zaokrąglona</div></div></div>
+            </div>
+            <span class="code">CHIP-RD-1000x20-HPL2</span>
+          </div>
+          <div class="pprice">
+            <div class="pp-qty">50 szt.</div>
+            <div class="pp-unit">359,67 PLN / szt.</div>
+            <div class="pp-cap">Wartość</div>
+            <div class="pp-total">17 983,50</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="oak"></span></div>
+          <div class="pbody">
+            <div class="pname"><span class="vbadge">B</span>Blat okrągły ø1000 mm — płyta wiórowa 20 mm</div>
+            <div class="spec-grid">
+              <div><span class="sg-label">Materiał</span><b>Płyta wiórowa</b></div>
+              <div><span class="sg-label">Grubość</span><b>20 mm</b></div>
+              <div><span class="sg-label">Kształt</span><b>ø1000 mm</b></div>
+              <div><span class="sg-label">Krawędź</span><b>ABS dopas.</b></div>
+            </div>
+            <div class="finish-strip">
+              <div class="fin-item"><span class="hpl-tile" data-tone="oak"></span><div><div class="fin-cap">Dekor HPL</div><div class="fin-val">Casella Natural Oak H1385 · Gr. III</div></div></div>
+              <div class="fin-item"><span class="frez-swatch" data-frez="fazowana"></span><div><div class="fin-cap">Frez krawędzi</div><div class="fin-val">Fazowana</div></div></div>
+            </div>
+            <span class="code">CHIP-RD-1000x20-HPL3</span>
+          </div>
+          <div class="pprice">
+            <div class="pp-qty">50 szt.</div>
+            <div class="pp-unit">637,26 PLN / szt.</div>
+            <div class="pp-cap">Wartość</div>
+            <div class="pp-total">31 863,00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="totals">
+        <div class="totals-box">
+          <div class="totals-row"><span class="tl">Podstawy stołu — netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant A (HPL Gr. II)</span><span>17 983,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant B (HPL Gr. III)</span><span>31 863,00 PLN</span></div>
+          <div class="totals-row"><span class="tl">Transport</span><span>do uzgodnienia</span></div>
+          <div class="totals-row grand"><span class="tl">Podstawy netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-note">Cena łączna zależy od wybranego wariantu blatu.</div>
+        </div>
+      </div>
+
+      <div class="pfooter">
+        <p>Kolory i wykończenia na zdjęciach są poglądowe i mogą różnić się od rzeczywistych. Zalecamy zapoznanie się z próbkami materiałów.</p>
+        <p>Wymiary mogą różnić się od podanych ze względu na proces produkcji. Tolerancja: ±2 mm. Ceny netto, bez VAT i transportu.</p>
+        <p class="brand">Mebella · mebella.pl</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ VARIANT C ══════════════════════════ -->
+  <div class="variant-col">
+    <div class="variant-tag">
+      <span class="v-kicker">Wariant C</span>
+      <div class="v-name">Galeria wizualna</div>
+      <div class="v-desc">Najmocniej realizuje cel „klient widzi co kupuje": duże foto 168&nbsp;px, wyeksponowany pasek próbek z podpisami, parametry jako pigułki. Najbardziej efektowny, zajmuje najwięcej miejsca.</div>
+    </div>
+    <div class="page vC">
+
+      <div class="masthead">
+        <div class="mast-top">
+          <img class="mast-logo-img" src="https://lh3.googleusercontent.com/d/1Xfg034BA9sSiPeUANZI2XjKEXEYdqjE2" alt="Mebella" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+          <div class="mast-logo-text" style="display:none">MEBELLA</div>
+          <div class="mast-ref">
+            <span class="ref-kicker">Oferta</span><b>OF/2026/3701</b> &nbsp;·&nbsp; 19.05.2026 &nbsp;·&nbsp; ważna do 19.06.2026
+          </div>
+        </div>
+        <div class="mast-bottom">
+          <div class="mast-party">
+            <div class="party-label">Oferta dla</div>
+            <div class="party-name">Paged Meble S.A.</div>
+            <div class="party-sub">Att.: Ewa Krzysik</div>
+          </div>
+          <div class="mast-contact">
+            <div class="contact-text">
+              <div class="contact-name">Ewa Dulcet</div>
+              <div class="contact-mail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1471637554797176717878753a6478">[email&#160;protected]</a></div>
+            </div>
+            <img class="contact-photo" src="https://lh3.googleusercontent.com/d/1PVb208bn-JuDL5CJESeCPpPsng_2cfc0" alt="" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <div class="rec-label">Nasza rekomendacja</div>
+        <div class="rec-body">Do hotelowej restauracji proponujemy podstawę Flat Steel w wersji Slim — stabilna, smukła wizualnie, w czerni RAL 9005. Blaty zestawiliśmy w dwóch wariantach cenowych, żeby łatwo dopasować je do budżetu projektu.</div>
+      </div>
+
+      <div class="pgrid">
+        <div class="sec-row">Podstawy stołu</div>
+        <div class="pcard">
+          <div class="pcard-top">
+            <img class="pimg" src="https://lh3.googleusercontent.com/d/1ko0fb4TEwwbAe1u0-CB0fl9RbV3_7cve" alt="" onerror="this.style.opacity='0'">
+            <div class="pmain">
+              <div class="pname">Flat Steel Round Big — 09 Slim | Dining</div>
+              <div class="psub">Podstawa okrągła, jednokolumnowa</div>
+              <div class="swatch-rail">
+                <div class="sw-item"><span class="sw-box"><span class="ral-sq" data-ral="9005"></span></span><div class="sw-cap">Baza</div><div class="sw-val">RAL 9005</div></div>
+                <div class="sw-item"><span class="sw-box"><span class="ral-sq" data-ral="9005"></span></span><div class="sw-cap">Kolumna</div><div class="sw-val">RAL 9005</div></div>
+              </div>
+              <div class="specbar">
+                <span class="sb-pill"><b>720 mm</b> wys.</span>
+                <span class="sb-pill">Mocowanie <b>KSO</b></span>
+                <span class="sb-pill">Skarpeta <b>brak</b></span>
+              </div>
+            </div>
+          </div>
+          <div class="pcard-foot">
+            <span class="code">201-RD565RAL-RD76RAL-720-1</span>
+            <div class="price-tag">
+              <span class="pt-q">50 szt. ·</span> <span class="pt-u">382,09 PLN/szt.</span>
+              <div class="pt-t">19 104,50 PLN</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-row">Blaty — warianty cenowe (prosimy o wybór)</div>
+        <div class="pcard">
+          <div class="pcard-top">
+            <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="walnut"></span></div>
+            <div class="pmain">
+              <div class="pname"><span class="vbadge">A</span>Blat okrągły ø1000 mm</div>
+              <div class="psub">Płyta wiórowa 20 mm</div>
+              <div class="swatch-rail">
+                <div class="sw-item"><span class="sw-box"><span class="hpl-tile" data-tone="walnut"></span></span><div class="sw-cap">Dekor HPL · Gr. II</div><div class="sw-val">Lincoln Walnut H1714</div></div>
+                <div class="sw-item"><span class="sw-box"><span class="frez-swatch" data-frez="r3"></span></span><div class="sw-cap">Frez krawędzi</div><div class="sw-val">R3 — zaokrąglona</div></div>
+              </div>
+              <div class="specbar">
+                <span class="sb-pill"><b>ø1000 mm</b></span>
+                <span class="sb-pill">Grubość <b>20 mm</b></span>
+                <span class="sb-pill">Krawędź <b>ABS dopas.</b></span>
+              </div>
+            </div>
+          </div>
+          <div class="pcard-foot">
+            <span class="code">CHIP-RD-1000x20-HPL2</span>
+            <div class="price-tag">
+              <span class="pt-q">50 szt. ·</span> <span class="pt-u">359,67 PLN/szt.</span>
+              <div class="pt-t">17 983,50 PLN</div>
+            </div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-top">
+            <div class="pimg" style="display:flex;align-items:center;justify-content:center;"><span class="blat-shape round" data-tone="oak"></span></div>
+            <div class="pmain">
+              <div class="pname"><span class="vbadge">B</span>Blat okrągły ø1000 mm</div>
+              <div class="psub">Płyta wiórowa 20 mm</div>
+              <div class="swatch-rail">
+                <div class="sw-item"><span class="sw-box"><span class="hpl-tile" data-tone="oak"></span></span><div class="sw-cap">Dekor HPL · Gr. III</div><div class="sw-val">Casella Natural Oak H1385</div></div>
+                <div class="sw-item"><span class="sw-box"><span class="frez-swatch" data-frez="fazowana"></span></span><div class="sw-cap">Frez krawędzi</div><div class="sw-val">Fazowana</div></div>
+              </div>
+              <div class="specbar">
+                <span class="sb-pill"><b>ø1000 mm</b></span>
+                <span class="sb-pill">Grubość <b>20 mm</b></span>
+                <span class="sb-pill">Krawędź <b>ABS dopas.</b></span>
+              </div>
+            </div>
+          </div>
+          <div class="pcard-foot">
+            <span class="code">CHIP-RD-1000x20-HPL3</span>
+            <div class="price-tag">
+              <span class="pt-q">50 szt. ·</span> <span class="pt-u">637,26 PLN/szt.</span>
+              <div class="pt-t">31 863,00 PLN</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="totals">
+        <div class="totals-box">
+          <div class="totals-row"><span class="tl">Podstawy stołu — netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant A (HPL Gr. II)</span><span>17 983,50 PLN</span></div>
+          <div class="totals-row"><span class="tl">Blat — wariant B (HPL Gr. III)</span><span>31 863,00 PLN</span></div>
+          <div class="totals-row"><span class="tl">Transport</span><span>do uzgodnienia</span></div>
+          <div class="totals-row grand"><span class="tl">Podstawy netto</span><span>19 104,50 PLN</span></div>
+          <div class="totals-note">Cena łączna zależy od wybranego wariantu blatu.</div>
+        </div>
+      </div>
+
+      <div class="pfooter">
+        <p>Kolory i wykończenia na zdjęciach są poglądowe i mogą różnić się od rzeczywistych. Zalecamy zapoznanie się z próbkami materiałów.</p>
+        <p>Wymiary mogą różnić się od podanych ze względu na proces produkcji. Tolerancja: ±2 mm. Ceny netto, bez VAT i transportu.</p>
+        <p class="brand">Mebella · mebella.pl</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── RAL Classic → HEX (podzbiór najczęstszych; rozszerzalny) ──
+  var RAL = {
+    "1015":"#E6D2B5","1023":"#FAD201","3000":"#A52019","3020":"#BB1F11",
+    "5010":"#0E294B","5015":"#1E5BA6","6005":"#114232","6011":"#587246",
+    "7016":"#293133","7021":"#23282B","7035":"#C5C7C4","7037":"#7D7F7D",
+    "7043":"#4C4A48","8017":"#442F29","8022":"#1B1717","9001":"#E9E0D2",
+    "9003":"#F4F4F4","9004":"#282828","9005":"#0A0A0A","9006":"#A1A1A0",
+    "9007":"#878581","9010":"#F1ECE1","9011":"#27292B","9016":"#F1F1EA",
+    "9017":"#1E1E1E","9023":"#787B7A"
+  };
+
+  // ── profile frezu krawędzi (schematyczny przekrój; podmiana na zdjęcia, gdy dograne) ──
+  function frezSvg(path) {
+    return '<svg viewBox="0 0 34 40" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="' + path + '" fill="#ddd9d3" stroke="#a8a49d" stroke-width="1"/>' +
+      '<path d="' + path + '" fill="none" stroke="#7a7670" stroke-width="0"/></svg>';
+  }
+  var FREZ = {
+    prosta:   frezSvg('M3,13 L31,13 L31,27 L3,27 Z'),
+    r3:       frezSvg('M3,13 L26,13 Q31,13 31,18 L31,22 Q31,27 26,27 L3,27 Z'),
+    fazowana: frezSvg('M3,13 L27,13 L31,17 L31,23 L27,27 L3,27 Z')
+  };
+
+  // ── tekstury dekoru HPL (placeholder do czasu zdjęć z Google Drive) ──
+  var HPL_TONE = {
+    walnut: "linear-gradient(115deg,#6b4a2f 0%,#7d5836 18%,#5c3d27 30%,#82603c 48%,#624327 62%,#7a5634 80%,#553a24 100%)",
+    oak:    "linear-gradient(115deg,#c4a06a 0%,#d2b07d 20%,#b8945f 34%,#cda872 52%,#bb9a64 68%,#d4b483 84%,#bd9a63 100%)",
+    anthracite: "linear-gradient(115deg,#3a3d40 0%,#45484b 30%,#34373a 55%,#424548 78%,#383b3e 100%)"
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // RAL swatches
+    document.querySelectorAll('.ral-sq[data-ral]').forEach(function (el) {
+      var code = (el.getAttribute('data-ral') || '').trim();
+      if (RAL[code]) {
+        el.style.background = RAL[code];
+      } else {
+        el.classList.add('unconfirmed');
+        el.title = 'Kolor do potwierdzenia';
+      }
+    });
+    // unconfirmed marker (explicit)
+    document.querySelectorAll('.ral-sq.unconfirmed').forEach(function (el) {
+      el.style.background = '';
+    });
+    // HPL tiles + kształty blatu (oba używają data-tone z HPL_TONE)
+    document.querySelectorAll('.hpl-tile[data-tone], .blat-shape[data-tone]').forEach(function (el) {
+      var t = el.getAttribute('data-tone');
+      if (HPL_TONE[t]) el.style.backgroundImage = HPL_TONE[t];
+    });
+    // FREZ (profil krawędzi) — schematyczny przekrój, placeholder do zdjęć
+    document.querySelectorAll('.frez-swatch[data-frez]').forEach(function (el) {
+      var f = el.getAttribute('data-frez');
+      if (FREZ[f]) { el.innerHTML = FREZ[f]; el.title = 'Profil frezu: ' + f + ' (poglądowo)'; }
+    });
+  });
+</script>
+</body>
+</html>

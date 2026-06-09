@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280" />
+  <title>Thumbnail — Z rozmowy do wyceny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+      background: #0F2040;
+      font-family: 'Inter', system-ui, sans-serif;
+      position: relative;
+    }
+
+    /* ── background texture ── */
+    .bg-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1.5px, transparent 1.5px);
+      background-size: 40px 40px;
+    }
+    .bg-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 40%, rgba(5,12,25,0.6) 100%);
+    }
+
+    /* ── layout: 3 columns ── */
+    .layout {
+      position: relative; z-index: 10;
+      width: 1280px; height: 720px;
+      display: grid;
+      grid-template-columns: 1fr 176px 1fr;
+      align-items: center;
+      padding: 0;
+    }
+
+    /* ────────────────────────────────
+       PANEL PRZED (lewy) — terminal
+    ──────────────────────────────── */
+    .panel-before {
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 48px 28px 48px 48px; gap: 20px; position: relative;
+    }
+    .badge-before {
+      position: absolute; top: 40px; left: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.7);
+      font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 6px 14px; border-radius: 5px;
+    }
+
+    /* ── Chat window (light mode) ── */
+    .chat-wrap {
+      width: 100%;
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1);
+    }
+    .chat-topbar {
+      background: #f9f9f7;
+      padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid #e8e6e2;
+    }
+    .chat-topbar-dots { display: flex; gap: 6px; }
+    .chat-topbar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .chat-topbar-dots span:nth-child(1) { background: #ff5f57; }
+    .chat-topbar-dots span:nth-child(2) { background: #febc2e; }
+    .chat-topbar-dots span:nth-child(3) { background: #28c840; }
+    .chat-topbar-title {
+      font-size: 12px; font-weight: 600; color: #1a1a1a;
+      font-family: 'Inter', sans-serif; margin-left: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .chat-topbar-icon {
+      width: 22px; height: 22px; border-radius: 5px;
+      background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .chat-body {
+      background: #ffffff;
+      padding: 14px 16px 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    /* Claude message (left) */
+    .cm-claude { display: flex; gap: 8px; align-items: flex-start; }
+    .cm-avatar {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .cm-avatar svg { display: block; }
+    .cm-bubble-c {
+      background: #f5f4f0;
+      border-radius: 4px 12px 12px 12px;
+      padding: 8px 12px;
+      font-size: 11.5px; line-height: 1.55; color: #1a1a1a;
+      font-family: 'Inter', sans-serif;
+      max-width: calc(100% - 36px);
+    }
+    .cm-bubble-c .ok { color: #16a34a; font-weight: 600; }
+
+    /* User message (right) */
+    .cm-user { display: flex; justify-content: flex-end; }
+    .cm-bubble-u {
+      background: #1e3a5f;
+      border-radius: 12px 4px 12px 12px;
+      padding: 8px 13px;
+      font-size: 11.5px; line-height: 1.55; color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      max-width: 80%;
+    }
+
+    /* ── MIDDLE ── */
+    .middle {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+    }
+    .arrow-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+    }
+    .time-badge {
+      background: #F97316; color: #fff;
+      font-size: 22px; font-weight: 900; letter-spacing: -0.02em;
+      padding: 10px 18px; border-radius: 8px; line-height: 1;
+      text-align: center; box-shadow: 0 4px 24px rgba(249,115,22,0.45);
+    }
+    .time-badge small {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.05em; opacity: 0.85; margin-top: 3px;
+    }
+    .arrow-svg { color: #F97316; filter: drop-shadow(0 0 8px rgba(249,115,22,0.4)); }
+
+    /* ────────────────────────────────
+       PANEL PO (prawy) — oferta
+    ──────────────────────────────── */
+    .panel-after {
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 48px 48px 48px 28px; gap: 0; position: relative;
+    }
+    .badge-after {
+      position: absolute; top: 40px; right: 48px;
+      background: rgba(249,115,22,0.2);
+      border: 1.5px solid rgba(249,115,22,0.45);
+      color: #F97316; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 5px;
+    }
+
+    /* Offer document wrapper */
+    .offer-wrap {
+      width: 100%;
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(249,115,22,0.25);
+    }
+
+    /* ── Offer document content (Variant C style, scaled) ── */
+    .offer-doc {
+      background: #ffffff;
+      width: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px; color: #1a1a1a; line-height: 1.45;
+      padding: 14px 16px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* masthead */
+    .om-top {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 8px; border-bottom: 1px solid #e6e6e6; margin-bottom: 8px;
+    }
+    .om-logo { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; }
+    .om-ref { font-size: 9px; color: #666; text-align: right; line-height: 1.6; }
+    .om-ref .ref-kicker { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+    .om-ref b { color: #1a1a1a; font-size: 10px; }
+
+    .om-parties {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding-bottom: 8px; border-bottom: 2.5px solid #1a1a1a; margin-bottom: 10px;
+    }
+    .om-party-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 3px; }
+    .om-party-name { font-weight: 700; font-size: 12px; }
+    .om-party-sub { color: #666; font-size: 10px; }
+    .om-agent { text-align: right; }
+    .om-agent-name { font-weight: 700; font-size: 11px; }
+    .om-agent-email { color: #666; font-size: 9.5px; }
+
+    /* recommendation */
+    .om-rec {
+      margin-bottom: 10px; padding: 8px 11px;
+      background: #f7f7f5; border-left: 2.5px solid #1a1a1a;
+    }
+    .om-rec-label { font-size: 7.5px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 3px; }
+    .om-rec-text { font-size: 9.5px; line-height: 1.55; color: #444; }
+
+    /* section heading */
+    .om-sec-head {
+      font-size: 8px; text-transform: uppercase; letter-spacing: 1.2px;
+      color: #888; font-weight: 700;
+      padding-bottom: 5px; margin-bottom: 7px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    /* product card — Variant C */
+    .om-pcard { padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; }
+    .om-pcard:last-of-type { border-bottom: none; margin-bottom: 0; }
+    .om-pcard-top { display: flex; gap: 11px; align-items: flex-start; }
+    .om-pimg {
+      width: 70px; height: 70px; background: #f5f5f5;
+      border-radius: 3px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .om-pimg img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .om-pmain { flex: 1; min-width: 0; }
+    .om-pname { font-weight: 700; font-size: 11px; margin-bottom: 5px; line-height: 1.35; }
+    .om-psub { color: #777; font-size: 9.5px; margin-bottom: 6px; }
+
+    /* swatch rail */
+    .om-swatch-rail { display: flex; gap: 14px; margin-bottom: 6px; }
+    .om-sw { text-align: center; }
+    .om-sw-box { display: block; width: 28px; height: 28px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.15); margin: 0 auto 3px; }
+    .om-sw-cap { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    .om-sw-val { font-size: 8.5px; font-weight: 600; color: #333; }
+
+    /* spec pills */
+    .om-pills { display: flex; flex-wrap: wrap; gap: 3px; }
+    .om-pill {
+      background: #f2f2f0; border-radius: 2px;
+      padding: 2px 7px; font-size: 9px; color: #444;
+      white-space: nowrap;
+    }
+    .om-pill b { color: #1a1a1a; }
+
+    /* card footer */
+    .om-pcard-foot {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-top: 7px;
+    }
+    .om-code {
+      font-family: 'Courier New', monospace; font-size: 8px; color: #c0c0c0;
+      align-self: flex-end;
+    }
+    .om-price-tag { text-align: right; white-space: nowrap; }
+    .om-price-qty { font-size: 9px; color: #888; }
+    .om-price-total { font-size: 15px; font-weight: 800; line-height: 1.1; }
+
+    /* totals */
+    .om-totals { display: flex; justify-content: flex-end; margin-top: 10px; }
+    .om-totals-box { min-width: 220px; border-top: 2px solid #1a1a1a; padding-top: 4px; }
+    .om-trow {
+      display: flex; justify-content: space-between;
+      padding: 3px 0; border-bottom: 1px solid #f0f0f0; font-size: 9px;
+    }
+    .om-trow .tl { color: #555; }
+    .om-trow.grand {
+      font-size: 14px; font-weight: 800;
+      padding-top: 7px; border-bottom: none;
+    }
+    .om-trow.grand .tl { color: #1a1a1a; }
+
+    /* ── BOTTOM BAR ── */
+    .bottom-bar {
+      position: absolute; z-index: 20; bottom: 0; left: 0; right: 0;
+      height: 56px; background: rgba(5,14,30,0.75);
+      backdrop-filter: blur(6px); border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+    }
+    .bottom-headline { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+    .bottom-headline span { color: #F97316; }
+    .bottom-logo img { height: 26px; display: block; }
+
+    /* ── orange edge accent ── */
+    .edge-left {
+      position: absolute; z-index: 30; top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(180deg, transparent 0%, #F97316 20%, #F97316 80%, transparent 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-dots"></div>
+  <div class="bg-vignette"></div>
+  <div class="edge-left"></div>
+
+  <div class="layout">
+
+    <!-- ══ PRZED: chat z Claude ══ -->
+    <div class="panel-before">
+      <div class="badge-before">ROZMOWA</div>
+
+      <div class="chat-wrap">
+        <div class="chat-topbar">
+          <div class="chat-topbar-dots"><span></span><span></span><span></span></div>
+          <div class="chat-topbar-title">
+            <div class="chat-topbar-icon">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg>
+            </div>
+            Claude — wycena B2B · Mebella
+          </div>
+        </div>
+        <div class="chat-body">
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c">Jak się nazywa klient lub firma?</div>
+          </div>
+
+          <div class="cm-user">
+            <div class="cm-bubble-u">Meblex sp. z o.o.</div>
+          </div>
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c">Jaką rodzinę produktu? Opisz słowami — kształt, materiał, przeznaczenie.</div>
+          </div>
+
+          <div class="cm-user">
+            <div class="cm-bubble-u">okrągła stalowa, duża, jadalniany</div>
+          </div>
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c"><span class="ok">Flat Steel Round Big, 720 mm ✓</span><br>Wykończenie bazy — STD czy RAL?</div>
+          </div>
+
+          <div class="cm-user">
+            <div class="cm-bubble-u">RAL 9005 czarny</div>
+          </div>
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c">Ilość sztuk?</div>
+          </div>
+
+          <div class="cm-user">
+            <div class="cm-bubble-u">50 szt.</div>
+          </div>
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c">Dodać blat do wyceny?</div>
+          </div>
+
+          <div class="cm-user">
+            <div class="cm-bubble-u">tak, ø1000 mm, wiórowa, Lincoln Walnut</div>
+          </div>
+
+          <div class="cm-claude">
+            <div class="cm-avatar"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8S4.41 14.5 8 14.5 14.5 11.59 14.5 8 11.59 1.5 8 1.5zm0 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="white"/></svg></div>
+            <div class="cm-bubble-c"><span class="ok">✓ Generuję ofertę OF/2026/3701...</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ŚRODEK: czas + strzałka ══ -->
+    <div class="middle">
+      <div class="arrow-wrap">
+        <div class="time-badge">
+          &lt; 5 MIN
+          <small>automatycznie</small>
+        </div>
+        <svg class="arrow-svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ══ PO: wygenerowana oferta ══ -->
+    <div class="panel-after">
+      <div class="badge-after">GOTOWA OFERTA</div>
+
+      <div class="offer-wrap">
+        <div class="offer-doc">
+
+          <!-- masthead -->
+          <div class="om-top">
+            <div class="om-logo">MEBELLA</div>
+            <div class="om-ref">
+              <span class="ref-kicker">Oferta</span> <b>OF/2026/3701</b><br>
+              19.05.2026 &nbsp;·&nbsp; ważna do 19.06.2026
+            </div>
+          </div>
+
+          <div class="om-parties">
+            <div>
+              <div class="om-party-label">Oferta dla</div>
+              <div class="om-party-name">Meblex sp. z o.o.</div>
+              <div class="om-party-sub">Att.: Ewa Krzysik</div>
+            </div>
+            <div class="om-agent">
+              <div class="om-agent-name">Ewa Dulcet</div>
+              <div class="om-agent-email">ewa@mebella.pl</div>
+            </div>
+          </div>
+
+          <!-- rekomendacja -->
+          <div class="om-rec">
+            <div class="om-rec-label">Nasza rekomendacja</div>
+            <div class="om-rec-text">Do hotelowej restauracji — Flat Steel Slim, RAL 9005. Blaty w dwóch wariantach HPL do wyboru.</div>
+          </div>
+
+          <!-- produkt 1: podstawa -->
+          <div class="om-sec-head">Podstawy stołu</div>
+          <div class="om-pcard">
+            <div class="om-pcard-top">
+              <div class="om-pimg">
+                <img src="https://lh3.googleusercontent.com/d/1ko0fb4TEwwbAe1u0-CB0fl9RbV3_7cve" alt=""
+                  onerror="this.outerHTML='<svg width=\'52\' height=\'52\' viewBox=\'0 0 52 52\' fill=\'none\'><circle cx=\'26\' cy=\'19\' r=\'14\' stroke=\'#ccc\' stroke-width=\'2\'/><rect x=\'10\' y=\'38\' width=\'32\' height=\'5\' rx=\'2.5\' fill=\'#ddd\'/></svg>'">
+              </div>
+              <div class="om-pmain">
+                <div class="om-pname">Flat Steel Round Big — 09 Slim | Dining</div>
+                <div class="om-psub">Podstawa okrągła, jednokolumnowa</div>
+                <div class="om-swatch-rail">
+                  <div class="om-sw">
+                    <span class="om-sw-box" style="background:#0A0A0A"></span>
+                    <div class="om-sw-cap">Baza</div>
+                    <div class="om-sw-val">RAL 9005</div>
+                  </div>
+                  <div class="om-sw">
+                    <span class="om-sw-box" style="background:#0A0A0A"></span>
+                    <div class="om-sw-cap">Kolumna</div>
+                    <div class="om-sw-val">RAL 9005</div>
+                  </div>
+                </div>
+                <div class="om-pills">
+                  <span class="om-pill"><b>720 mm</b> wys.</span>
+                  <span class="om-pill">Mocowanie <b>KSO</b></span>
+                  <span class="om-pill">Skarpeta <b>brak</b></span>
+                </div>
+              </div>
+            </div>
+            <div class="om-pcard-foot">
+              <span class="om-code">201-RD565RAL-RD76RAL-720-1</span>
+              <div class="om-price-tag">
+                <div class="om-price-qty">50 szt. · 99,99 PLN/szt.</div>
+                <div class="om-price-total">4 999,50 PLN</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- produkt 2: blat -->
+          <div class="om-sec-head">Blat — wariant A (do wyboru)</div>
+          <div class="om-pcard">
+            <div class="om-pcard-top">
+              <div class="om-pimg">
+                <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(115deg,#6b4a2f 0%,#7d5836 22%,#5c3d27 44%,#82603c 66%,#624327 82%,#7a5634 100%);border:1px solid rgba(0,0,0,0.1)"></div>
+              </div>
+              <div class="om-pmain">
+                <div class="om-pname">Blat okrągły ø1000 mm — wiórowa 20 mm</div>
+                <div class="om-psub">Płyta wiórowa (CHIP)</div>
+                <div class="om-swatch-rail">
+                  <div class="om-sw">
+                    <span class="om-sw-box" style="background:linear-gradient(115deg,#6b4a2f,#7d5836,#5c3d27)"></span>
+                    <div class="om-sw-cap">Dekor HPL · Gr. II</div>
+                    <div class="om-sw-val">Lincoln Walnut</div>
+                  </div>
+                </div>
+                <div class="om-pills">
+                  <span class="om-pill"><b>ø1000 mm</b></span>
+                  <span class="om-pill">Grubość <b>20 mm</b></span>
+                  <span class="om-pill">HPL <b>Gr. II</b></span>
+                </div>
+              </div>
+            </div>
+            <div class="om-pcard-foot">
+              <span class="om-code">CHIP-RD-1000x20-HPL2</span>
+              <div class="om-price-tag">
+                <div class="om-price-qty">50 szt. · 99,99 PLN/szt.</div>
+                <div class="om-price-total">4 999,50 PLN</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- totals -->
+          <div class="om-totals">
+            <div class="om-totals-box">
+              <div class="om-trow"><span class="tl">Podstawy stołu</span><span>4 999,50 PLN</span></div>
+              <div class="om-trow"><span class="tl">Blat — wariant A</span><span>4 999,50 PLN</span></div>
+              <div class="om-trow grand"><span class="tl">Razem netto</span><span>9 999,00 PLN</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- bottom bar -->
+  <div class="bottom-bar">
+    <div class="bottom-headline">Z rozmowy z AI do gotowej <span>wyceny B2B</span> — bez arkuszy, bez przeliczania</div>
+    <div class="bottom-logo">
+      <img src="assets/logo-cennikb2b.png" alt="CennikB2B" />
+    </div>
+  </div>
+
+</body>
+</html>
