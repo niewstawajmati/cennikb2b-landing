@@ -3,152 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CennikB2B — Automatyzacja sprzedaży B2B dla firm produkcyjnych | MTA Group</title>
-  <meta name="description" content="Automatyzacja sprzedaży B2B — generator cenników i wycen dla firm produkcyjnych. Spersonalizowany cennik w 15 minut lub gotowa wycena custom w 10 minut." />
+  <title>CennikB2B — Dedykowany cennik dla każdego klienta w około 15 minut | MTA Group</title>
+  <meta name="description" content="System automatycznego generowania dedykowanych cenników B2B dla firm produkcyjnych. Handlowiec generuje spersonalizowany cennik w około 15 minut — bez grafika, bez Excela." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ===== PRODUCT LADDER ===== */
-    .ladder-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
-    }
-    .ladder-card {
-      background: var(--white);
-      border-radius: 12px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 20px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .ladder-card-soon { opacity: 0.6; }
-    .ladder-card-header { display: flex; justify-content: space-between; align-items: flex-start; }
-    .ladder-num { font-size: 44px; font-weight: 800; line-height: 1; color: var(--yellow); }
-    .ladder-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-    }
-    .ladder-badge-available { background: #dcfce7; color: #15803d; }
-    .ladder-badge-soon      { background: #fef3c7; color: #92400e; }
-    .ladder-name { font-size: 22px; font-weight: 800; color: var(--dark); }
-    .ladder-jtbd { font-size: 15px; line-height: 1.65; color: var(--text); }
-    .ladder-pains {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 14px 16px;
-      background: rgba(15,32,64,0.04);
-      border-radius: 8px;
-    }
-    .ladder-pains-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      padding-bottom: 4px;
-    }
-    .ladder-pains span { font-size: 13px; color: var(--muted); line-height: 1.5; }
-    .ladder-details { border-top: 1px solid rgba(0,0,0,0.08); padding-top: 12px; }
-    .ladder-details summary {
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--dark);
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-    .ladder-details summary::-webkit-details-marker { display: none; }
-    .ladder-details summary::after { content: '+'; font-size: 18px; font-weight: 300; color: var(--yellow); }
-    .ladder-details[open] summary::after { content: '−'; }
-    .ladder-details ul { margin: 10px 0 4px 16px; display: flex; flex-direction: column; gap: 6px; }
-    .ladder-details li { font-size: 13px; line-height: 1.6; color: var(--text); }
-    .ladder-soon-note {
-      font-size: 13px;
-      color: var(--muted);
-      font-style: italic;
-      padding: 12px 14px;
-      background: rgba(0,0,0,0.03);
-      border-radius: 6px;
-      margin-top: auto;
-    }
-    .ladder-footer {
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .ladder-price { font-size: 15px; font-weight: 700; color: var(--dark); }
-    .btn-sm { padding: 8px 18px !important; font-size: 14px !important; }
-    .demo-placeholder {
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.18);
-      border-radius: 12px;
-      min-height: 360px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 12px;
-      text-align: center;
-      padding: 40px;
-    }
-    .demo-placeholder p { color: rgba(255,255,255,0.3); font-size: 13px; }
-    @media (max-width: 860px) {
-      .ladder-grid { grid-template-columns: 1fr; }
-    }
-    /* ===== HERO STEP BADGE ===== */
-    .hero-step-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 14px 5px 10px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 600;
-      background: rgba(249,115,22,0.12);
-      color: var(--yellow);
-      border: 1px solid rgba(249,115,22,0.3);
-      margin-bottom: 20px;
-    }
-    .hero-step-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--yellow);
-      flex-shrink: 0;
-    }
-    /* ===== LADDER CARD STATES ===== */
-    .ladder-badge-current { background: var(--yellow); color: var(--dark); }
-    .ladder-badge-next    { background: rgba(249,115,22,0.1); color: var(--yellow); border: 1px solid rgba(249,115,22,0.4); }
-    .ladder-card-current  { border-top: 3px solid var(--yellow) !important; }
-    .ladder-card-next     { border-top: 2px solid rgba(249,115,22,0.45) !important; }
-    /* ===== LOOM IN CARD ===== */
-    .ladder-loom {
-      border-radius: 8px;
-      overflow: hidden;
-      aspect-ratio: 16/9;
-      background: rgba(15,32,64,0.05);
-    }
-    .ladder-loom iframe { width: 100%; height: 100%; display: block; border: 0; }
-  </style>
 </head>
 <body>
 
@@ -158,25 +19,17 @@
       <a href="#" class="nav-logo">
         <img src="assets/logo-cennikb2b.png" alt="CennikB2B" class="nav-logo-img" />
       </a>
-      <div style="display:flex;align-items:center;gap:24px;">
-        <a href="#produkty" style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:500;text-decoration:none;">Produkty</a>
-        <a href="#kontakt" class="btn btn-outline-sm">Kontakt</a>
-      </div>
+      <a href="#kontakt" class="btn btn-outline-sm">Kontakt</a>
     </nav>
 
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-step-badge">
-          <span class="hero-step-dot"></span>
-          Etap 01 z 04 · Generator Cenników
-        </div>
-
-        <div class="hero-tag">Automatyzacja sprzedaży B2B — od cennika do zamówienia.</div>
+        <div class="hero-tag">Dedykowany cennik dla każdego klienta. W około 15 minut.</div>
 
         <div class="hero-headlines" id="heroSlider">
           <h1 class="hero-headline active">Twój handlowiec może zamykać sprzedaż<br><span class="accent">zamiast wklepywać tabele.</span></h1>
           <h1 class="hero-headline">Twoje koszty wytworzenia mogą zmienić się w tydzień.<br><span class="accent">Twój cennik też powinien.</span></h1>
-          <h1 class="hero-headline">Klient pyta o wycenę.<br><span class="accent">Twój handlowiec ma ją gotową w 10 minut.</span></h1>
+          <h1 class="hero-headline">Zamiast tygodni negocjacji —<br><span class="accent">spersonalizowany cennik w skrzynce klienta w około 15 minut.</span></h1>
         </div>
 
         <div class="hero-dots" id="heroDots">
@@ -185,7 +38,7 @@
           <button class="dot" aria-label="Slajd 3"></button>
         </div>
 
-        <p class="hero-sub">Generuj spersonalizowane cenniki i wyceny B2B automatycznie — klient dostaje gotowy dokument w minutach, nie dniach.</p>
+        <p class="hero-sub">Handlowiec generuje spersonalizowany cennik w ~15 minut — klient dostaje gotową ofertę ze swoimi cenami i rabatami, bez maili i pytań.</p>
 
         <div class="hero-cta">
           <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-primary" target="_blank" rel="noopener">
@@ -218,142 +71,6 @@
       <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--white)"/></svg>
     </div>
   </header>
-
-  <!-- ===================== CZTERY ETAPY ===================== -->
-  <section class="section section-light" id="produkty">
-    <div class="container">
-      <h2 class="section-title">Cztery etapy automatyzacji sprzedaży B2B</h2>
-      <p class="section-sub">Zacznij od jednego etapu — dokładaj kolejne, kiedy jesteś gotowy. Każdy działa samodzielnie.</p>
-
-      <div class="ladder-grid">
-
-        <!-- P1 -->
-        <div class="ladder-card ladder-card-current">
-          <div class="ladder-card-header">
-            <div class="ladder-num">01</div>
-            <span class="ladder-badge ladder-badge-current">Ta strona</span>
-          </div>
-          <h3 class="ladder-name">Generator Cenników</h3>
-          <p class="ladder-jtbd">Spersonalizowany cennik B2B dla każdego klienta w 15 minut — bez grafika, bez Excela, bez czekania tygodniami.</p>
-          <div class="ladder-pains">
-            <span class="ladder-pains-label">Ten etap jest dla Ciebie, jeśli:</span>
-            <span>✗ Zmiana cen = tygodnie czekania i kolejne zlecenie do grafika</span>
-            <span>✗ Każdy klient ma inne warunki — ręczne dostosowywanie przy każdej ofercie</span>
-            <span>✗ Klient dostaje standardowy cennik z dopiskiem "tu odjąć 5%"</span>
-          </div>
-          <div class="ladder-loom">
-            <!-- TODO: zastąp LOOM_P1_ID właściwym ID z loom.com/share/[ID] -->
-            <iframe src="https://www.loom.com/embed/008df5555a7745f0a5821630da624aea" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
-          <details class="ladder-details">
-            <summary>Idealny dla Ciebie, jeśli…</summary>
-            <ul>
-              <li>Prowadzisz firmę produkcyjną lub dystrybucyjną z rozbudowanym katalogiem — im więcej wariantów i produktów, tym większa przewaga systemu</li>
-              <li>Masz kilku lub więcej klientów B2B z różnymi rabatami i warunkami</li>
-              <li>Handlowiec traci czas na przygotowywanie ofert zamiast sprzedawać</li>
-              <li>Koszty wytworzenia zmieniają się kilka razy w roku</li>
-            </ul>
-          </details>
-          <details class="ladder-details">
-            <summary>Co musisz mieć gotowe</summary>
-            <ul>
-              <li>Dane produktów w ERP, Sheets lub CSV (powiemy Ci, jakiej dokładnie struktury)</li>
-              <li>Szkic lub gotowy layout cennika — lub zamawiasz projekt graficzny u nas</li>
-            </ul>
-          </details>
-          <div class="ladder-footer">
-            <span class="ladder-price">od 9 900 PLN</span>
-            <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Umów demo →</a>
-          </div>
-        </div>
-
-        <!-- P2 -->
-        <div class="ladder-card ladder-card-next">
-          <div class="ladder-card-header">
-            <div class="ladder-num">02</div>
-            <span class="ladder-badge ladder-badge-next">Następny krok →</span>
-          </div>
-          <h3 class="ladder-name">Generator Wycen</h3>
-          <p class="ladder-jtbd">Gotowa wycena custom dla klienta w 10 minut — z naturalnej rozmowy z AI, nie z godzin w Excelu.</p>
-          <div class="ladder-pains">
-            <span class="ladder-pains-label">Ten etap jest dla Ciebie, jeśli:</span>
-            <span>✗ Każde zapytanie inne — handlowiec wycenia od zera za każdym razem</span>
-            <span>✗ Brak standardu: każda oferta wygląda inaczej, marże liczone ręcznie</span>
-            <span>✗ Klient czeka kilka dni — przez ten czas pyta konkurencję</span>
-          </div>
-          <div class="ladder-loom">
-            <!-- TODO: zastąp LOOM_P2_ID właściwym ID z loom.com/share/[ID] -->
-            <iframe src="https://www.loom.com/embed/LOOM_P2_ID" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
-          <details class="ladder-details">
-            <summary>Idealny dla Ciebie, jeśli…</summary>
-            <ul>
-              <li>Każde zamówienie jest unikalne — nie masz stałego cennika bazowego dla klientów</li>
-              <li>Handlowiec traci 2+ godziny na przygotowanie jednej wyceny</li>
-              <li>Marże i warunki są negocjowane indywidualnie przy każdym zapytaniu</li>
-            </ul>
-          </details>
-          <details class="ladder-details">
-            <summary>Co musisz mieć gotowe</summary>
-            <ul>
-              <li>Cennik bazowy lub koszty TKW w arkuszu kalkulacyjnym</li>
-              <li>Zasady marżowania i rabatowania (lub gotowość ich opisania z nami)</li>
-            </ul>
-          </details>
-          <div class="ladder-footer">
-            <span class="ladder-price">Wycena indywidualna</span>
-            <a href="https://calendly.com/mateusz-mikolajczyk/cennikb2b" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Umów demo →</a>
-          </div>
-        </div>
-
-        <!-- P3 -->
-        <div class="ladder-card ladder-card-soon">
-          <div class="ladder-card-header">
-            <div class="ladder-num">03</div>
-            <span class="ladder-badge ladder-badge-soon">Wkrótce</span>
-          </div>
-          <h3 class="ladder-name">Integracja CRM</h3>
-          <p class="ladder-jtbd">Dane klienta z CRM zaciągają się do wyceny automatycznie — zero szukania historii przed każdą rozmową.</p>
-          <div class="ladder-pains">
-            <span class="ladder-pains-label">Ten etap jest dla Ciebie, jeśli:</span>
-            <span>✗ Handlowiec szuka historii zamówień w mailach przed każdą rozmową</span>
-            <span>✗ Wyceny bez kontekstu — bez wiedzy o poprzednich warunkach klienta</span>
-            <span>✗ CRM i narzędzia do ofertowania to dwa osobne światy</span>
-          </div>
-          <div class="ladder-soon-note">W trakcie budowy. Daj nam znać, że Cię to interesuje — dostaniesz dostęp jako pierwszy.</div>
-          <div class="ladder-footer">
-            <span class="ladder-price"></span>
-            <a href="#kontakt" class="btn btn-outline-dark btn-sm">Daj mi znać →</a>
-          </div>
-        </div>
-
-        <!-- P4 -->
-        <div class="ladder-card ladder-card-soon">
-          <div class="ladder-card-header">
-            <div class="ladder-num">04</div>
-            <span class="ladder-badge ladder-badge-soon">Wkrótce</span>
-          </div>
-          <h3 class="ladder-name">Integracja ERP</h3>
-          <p class="ladder-jtbd">Zaakceptowana oferta trafia prosto do produkcji — bez przepisywania między systemami, bez opóźnień.</p>
-          <div class="ladder-pains">
-            <span class="ladder-pains-label">Ten etap jest dla Ciebie, jeśli:</span>
-            <span>✗ Przyjęte zamówienie przepisywane ręcznie do ERP — ryzyko błędu i opóźnienie</span>
-            <span>✗ Gap między "klient zapłacił" a "idziemy do produkcji"</span>
-            <span>✗ Każde zamówienie wymaga interwencji człowieka w kilku systemach</span>
-          </div>
-          <div class="ladder-soon-note">W trakcie budowy. Daj nam znać, że Cię to interesuje — dostaniesz dostęp jako pierwszy.</div>
-          <div class="ladder-footer">
-            <span class="ladder-price"></span>
-            <a href="#kontakt" class="btn btn-outline-dark btn-sm">Daj mi znać →</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="section-divider">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--white)"/></svg>
-    </div>
-  </section>
 
   <!-- ===================== PROBLEM ===================== -->
   <section class="section section-light" id="problem">
@@ -391,7 +108,7 @@
   <!-- ===================== DLA KOGO ===================== -->
   <section class="section section-beige" id="dla-kogo">
     <div class="container">
-      <h2 class="section-title">Generator Cenników — czy to dla Ciebie?</h2>
+      <h2 class="section-title">Czy CennikB2B jest dla Ciebie?</h2>
 
       <div class="fit-grid">
         <div class="fit-card fit-card-yes">
@@ -422,7 +139,6 @@
             <li>Masz mniej niż 20 SKU w ofercie</li>
             <li>Sprzedajesz tylko detalicznie (B2C)</li>
             <li>Masz już wdrożony system automatycznego generowania cenników wizualnych</li>
-            <li>Każde zamówienie jest w pełni unikalne i nie masz stałego katalogu — w takim przypadku sprawdź <a href="#produkty" style="color:inherit;font-weight:600;">Generator Wycen (etap 02)</a></li>
           </ul>
         </div>
       </div>
@@ -435,7 +151,7 @@
   <!-- ===================== JAK TO DZIAŁA ===================== -->
   <section class="section section-dark" id="jak-dziala">
     <div class="container">
-      <h2 class="section-title">Jak działa Generator Cenników?</h2>
+      <h2 class="section-title">Jak to działa? — kroki</h2>
       <p class="section-sub">Dwie fazy — jednorazowe wdrożenie i generowanie cennika.</p>
 
       <div class="steps-timeline" aria-hidden="true">
@@ -776,7 +492,7 @@
   <!-- ===================== KATALOG PREVIEW ===================== -->
   <section class="section section-dark" id="katalog">
     <div class="container">
-      <h2 class="section-title">Generator Cenników — przykładowy katalog</h2>
+      <h2 class="section-title">Zobacz przykładowy katalog</h2>
       <p class="section-sub">Przykładowy katalog z okrojonym asortymentem — dzięki uprzejmości <a href="https://mebella.pl" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;opacity:0.7">mebella.pl</a>. Ceny ilustracyjne.</p>
 
       <div class="catalog-preview">
@@ -789,7 +505,7 @@
       </div>
     </div>
     <div class="section-divider">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--dark)"/></svg>
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60Z" fill="var(--white)"/></svg>
     </div>
   </section>
 
@@ -890,14 +606,6 @@
       <div class="faq-list">
 
         <details class="faq-item">
-          <summary class="faq-question">Czym różni się Generator Cenników od Generatora Wycen?</summary>
-          <div class="faq-answer">
-            <p>Oba narzędzia przyspieszają ofertowanie, ale rozwiązują różne problemy. <strong>Generator Cenników</strong> sprawdza się, gdy masz stosunkowo stały katalog produktów i wielu klientów B2B z różnymi rabatami — generujesz dla każdego jego własny, wizualny cennik ze wszystkimi produktami i indywidualnymi cenami.</p>
-            <p><strong>Generator Wycen</strong> odpowiada na zapytania custom — kiedy klient prosi o konkretne zamówienie, handlowiec prowadzi rozmowę z AI i dostaje gotową wycenę HTML z pozycjami, cenami i wyliczonymi marżami. Możesz wdrożyć jedno lub oba — patrz sekcja "Cztery etapy" na początku strony.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
           <summary class="faq-question">Czy to działa tylko dla branży meblarskiej?</summary>
           <div class="faq-answer">
             <p>Nie — system działa dla każdej firmy produkcyjnej lub dystrybucyjnej, która ma katalog produktów i obsługuje odbiorców B2B. Mebella.pl to nasz pierwszy wdrożony klient, ale rozwiązanie jest branżowo-agnostyczne: meble, okna, drzwi, AGD, materiały budowlane, chemia gospodarcza — wszędzie tam, gdzie produkt ma parametry, kody i ceny.</p>
@@ -952,8 +660,8 @@
         <details class="faq-item">
           <summary class="faq-question">Co po cenniku? Czy system można rozbudować?</summary>
           <div class="faq-answer">
-            <p>Tak. Generator Cenników i Generator Wycen to pierwsze dwa etapy z planowanego ciągu czterech automatyzacji — kolejne to Integracja CRM i Integracja ERP. Możesz zacząć od jednego etapu i dokładać kolejne, kiedy jesteś gotowy.</p>
-            <p>W ramach samego Generatora Cenników możliwe rozszerzenia to: dodatkowa wersja językowa cennika (jedna w cenie), nowy layout po rebrandingu, karty produktów. Wszystko w oparciu o te same dane, które już masz.</p>
+            <p>Tak. Gdy dane masz już w jednym miejscu i system działa, naturalnym kolejnym krokiem są <strong>karty produktów</strong> — większe zdjęcie, pełen opis techniczny, certyfikaty, materiały. To osobna usługa, którą ofertujemy — klienci najpierw dostają cennik, a potem pytają o szczegóły konkretnych produktów, karty to odpowiedź na to zapytanie.</p>
+            <p>Możliwe rozszerzenia: wersja językowa cennika (patrz niżej), nowy layout po rebrandingu. Wszystko w oparciu o te same dane, które już masz.</p>
           </div>
         </details>
 
